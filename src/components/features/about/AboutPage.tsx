@@ -70,7 +70,10 @@ const locations = [
   { city: "Dallas, Texas", role: "Headquarters", icon: Building2 },
   { city: "Hyderabad, India", role: "Delivery Center", icon: MapPin },
   { city: "Chennai, India", role: "Delivery Center", icon: MapPin },
+  { city: "Mumbai, India", role: "Delivery Center", icon: MapPin },
 ] as const;
+
+const locationTrack = [...locations, ...locations] as const;
 
 const values = [
   {
@@ -203,11 +206,19 @@ export function AboutPage() {
             title="Strategic presence with global delivery capability"
             description="Data Acies combines business proximity with distributed execution across the United States and India."
           />
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {locations.map((location) => {
+          <div className="relative mt-12 overflow-hidden rounded-[2rem] border border-slate-200 bg-slate-50/80 py-6">
+            <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-slate-50 via-slate-50/90 to-transparent" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-slate-50 via-slate-50/90 to-transparent" />
+            <motion.div
+              aria-label="Locations conveyor belt"
+              className="flex w-max items-stretch gap-6 px-6"
+              animate={{ x: [0, "-50%"] }}
+              transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
+            >
+              {locationTrack.map((location, index) => {
               const Icon = location.icon;
               return (
-                <Card key={location.city}>
+                <Card key={`${location.city}-${index}`} className="w-[18rem] shrink-0">
                   <Icon className="size-7 text-primary" />
                   <h3 className="mt-5 font-heading text-xl font-semibold text-slate-950">
                     {location.city}
@@ -215,7 +226,8 @@ export function AboutPage() {
                   <p className="mt-2 text-sm text-slate-600">{location.role}</p>
                 </Card>
               );
-            })}
+              })}
+            </motion.div>
           </div>
         </div>
       </section>

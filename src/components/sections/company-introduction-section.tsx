@@ -1,10 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { motion, useInView } from "motion/react";
-import { useRef, type ReactNode } from "react";
-import { ArrowRight, Building2, Cloud, CircuitBoard, Network } from "lucide-react";
-import { ROUTES } from "@/constants/routes";
+import { useRef } from "react";
+import { Building2, Cloud, CircuitBoard, Network } from "lucide-react";
 import { Container } from "@/components/layout/container";
 import { IntroFeaturePanel } from "@/components/features/introduction/intro-feature-panel";
 
@@ -136,37 +134,6 @@ export function CompanyIntroductionSection() {
           Welcome to Data Acies
         </p>
         <TitleReveal />
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-          className="mx-auto mt-16 max-w-2xl rounded-[1.75rem] border border-slate-200/80 bg-white/85 px-6 py-10 text-center shadow-[0_16px_44px_rgba(15,23,42,0.05)] backdrop-blur-sm sm:px-10 sm:py-12"
-        >
-          <h3 className="font-heading text-2xl font-semibold tracking-[-0.02em] text-slate-950 sm:text-3xl">
-            Ready to Transform Your Business?
-          </h3>
-          <p className="mt-4 text-base leading-7 text-slate-600">
-            Engineering-led transformation for cloud, data, and automation initiatives.
-          </p>
-          <Link
-            href={ROUTES.about}
-            className="group mt-8 inline-flex h-12 items-center gap-2 rounded-full border border-primary bg-white px-7 text-sm font-semibold text-primary transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary hover:text-white hover:shadow-[0_12px_28px_rgba(37,99,235,0.18)]"
-          >
-            Learn More
-            <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:text-white" />
-          </Link>
-        </motion.div>
-
-        <motion.div
-          aria-hidden
-          initial={{ scaleX: 0, opacity: 0 }}
-          whileInView={{ scaleX: 1, opacity: 1 }}
-          viewport={{ once: true, margin: "-40px" }}
-          transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-          className="mx-auto mt-14 h-px max-w-5xl origin-center bg-linear-to-r from-transparent via-sky-200 to-transparent"
-        />
       </Container>
     </section>
   );

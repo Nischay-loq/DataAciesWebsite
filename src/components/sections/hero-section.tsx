@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "motion/react";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { ROUTES } from "@/constants/routes";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
@@ -17,8 +17,6 @@ const reveal = {
   }),
 };
 
-const trustItems = ["AI Solutions", "Enterprise Platforms", "Intelligent Automation", "Global Delivery"] as const;
-
 export function HeroSection() {
   return (
     <section
@@ -30,9 +28,10 @@ export function HeroSection() {
         aria-hidden
       />
 
-      <div className="relative mx-auto max-w-7xl px-container-x py-20 sm:py-24 lg:min-h-[calc(100svh-6.5rem)] lg:py-28">
-        <div className="grid gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.98fr)] lg:items-stretch xl:gap-20">
-          <div className="max-w-2xl">
+      <div className="relative mx-auto flex min-h-[90vh] max-w-7xl flex-col px-container-x py-16 sm:py-20 lg:py-24">
+        <div className="grid flex-1 items-center gap-12 lg:grid-cols-[minmax(0,42fr)_minmax(0,58fr)] lg:gap-16 xl:gap-20">
+          {/* LEFT COLUMN — content only, capped for readability, vertically centered */}
+          <div className="w-full max-w-[520px]">
             <motion.p
               custom={0}
               variants={reveal}
@@ -49,7 +48,7 @@ export function HeroSection() {
               variants={reveal}
               initial="hidden"
               animate="visible"
-              className="mt-5 max-w-4xl font-heading text-[2.9rem] font-semibold leading-[1.02] tracking-[-0.055em] text-slate-950 sm:text-[4rem] lg:text-[5.1rem] xl:text-[5.6rem]"
+              className="mt-5 font-heading text-[2.6rem] font-semibold leading-[1.04] tracking-[-0.045em] text-slate-950 sm:text-[3.2rem] lg:text-[3.5rem] xl:text-[3.9rem]"
             >
               Engineering the Future of Intelligent Business
             </motion.h1>
@@ -59,11 +58,11 @@ export function HeroSection() {
               variants={reveal}
               initial="hidden"
               animate="visible"
-              className="mt-6 min-h-14 sm:min-h-16"
+              className="mt-5 min-h-12 sm:min-h-14"
             >
               <TypingHeadline
                 startDelay={900}
-                className="text-[1.9rem] font-semibold leading-tight tracking-[-0.04em] text-primary sm:text-[2.4rem] lg:text-[2.95rem]"
+                className="text-[1.5rem] font-semibold leading-tight tracking-[-0.03em] text-primary sm:text-[1.85rem] lg:text-[2.1rem]"
               />
             </motion.div>
 
@@ -72,7 +71,7 @@ export function HeroSection() {
               variants={reveal}
               initial="hidden"
               animate="visible"
-              className="mt-6 max-w-xl text-[1.05rem] leading-8 text-slate-600 sm:text-lg"
+              className="mt-6 text-[1.05rem] leading-8 text-slate-600 sm:text-lg"
             >
               We design, build, and operate scalable digital solutions that help
               enterprises automate workflows, improve decision-making, and
@@ -106,43 +105,23 @@ export function HeroSection() {
                 Explore Solutions
               </Link>
             </motion.div>
-
-            <motion.div
-              custom={0.6}
-              variants={reveal}
-              initial="hidden"
-              animate="visible"
-              className="mt-8 grid max-w-2xl gap-3 sm:grid-cols-2"
-            >
-              {trustItems.map((item, index) => (
-                <motion.div
-                  key={item}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.64 + index * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                  className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm"
-                >
-                  <CheckCircle2 className="size-4 shrink-0 text-primary" />
-                  <span>{item}</span>
-                </motion.div>
-              ))}
-            </motion.div>
           </div>
 
+          {/* RIGHT COLUMN — video only, fully visible, never cropped, right-aligned */}
           <motion.div
             initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}
-            className="relative mx-auto flex h-full w-full max-w-[40rem] self-stretch lg:ml-auto lg:mr-0 lg:max-w-none"
+            className="relative flex w-full items-center justify-center lg:justify-end"
           >
             <div
-              className="pointer-events-none absolute -inset-8 -z-10 rounded-[3rem] bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.12),transparent_62%)] blur-2xl"
+              className="pointer-events-none absolute -inset-6 -z-10 rounded-[3rem] bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.12),transparent_62%)] blur-2xl"
               aria-hidden
             />
-            <div className="flex h-full min-h-[32rem] w-full rounded-[2.25rem] border border-slate-200 bg-white p-3 shadow-[0_20px_60px_rgba(15,23,42,0.08)] sm:p-4 lg:min-h-[calc(100svh-13rem)]">
-              <div className="relative h-full min-h-[30rem] w-full overflow-hidden rounded-[1.75rem] border border-slate-200 bg-slate-50 lg:min-h-[calc(100svh-15rem)]">
+            <div className="w-full max-w-[46rem] rounded-[2rem] border border-slate-200 bg-white p-3 shadow-[0_20px_60px_rgba(15,23,42,0.08)] sm:p-4">
+              <div className="overflow-hidden rounded-[1.5rem] border border-slate-200 bg-slate-50">
                 <video
-                  className="block h-full w-full object-cover object-center"
+                  className="block aspect-[1024/592] h-auto w-full object-contain"
                   autoPlay
                   muted
                   loop

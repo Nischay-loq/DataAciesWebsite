@@ -6,7 +6,7 @@ export const areasOfInterest = [
   "Generative AI",
   "Agentic AI",
   "Intelligent Automation",
-  "AI-Powered ITSM Platform",
+  "AgeisOps",
   "Test Data Generation Platform",
   "Cloud & DevOps",
   "Managed Services",

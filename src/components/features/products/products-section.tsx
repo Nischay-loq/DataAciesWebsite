@@ -10,7 +10,7 @@ import { buttonVariants } from "@/components/ui/button";
 
 const products = [
   {
-    title: "AI-Powered ITSM Platform",
+    title: "AgeisOps",
     tag: "Service Operations",
     icon: Headphones,
     problem: "High ticket volumes, manual triage, and slow response times strain support teams.",

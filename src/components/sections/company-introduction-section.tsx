@@ -13,28 +13,19 @@ const features = [
     icon: <Cloud className="size-10 sm:size-11" strokeWidth={1.5} />,
     title: "Cloud, Data Engineering & Site Reliability Engineering",
     description:
-      "Data Acies delivers scalable cloud platforms, modern data engineering solutions, and site reliability engineering services that help enterprises build secure, resilient, and high-performing digital ecosystems.",
-    supporting:
-      "These capabilities strengthen operational efficiency, improve platform scalability, and ensure the reliability leaders expect from mission-critical systems.",
-    reverse: false,
+      "Scalable cloud platforms and modern data engineering built for reliability.",
   },
   {
     icon: <Building2 className="size-10 sm:size-11" strokeWidth={1.5} />,
     title: "Technology Consulting & Strategic Staffing",
     description:
-      "We provide technology consulting, specialized staffing, and experienced engineering talent across modern technology domains, partnering with organizations throughout their digital transformation journey.",
-    supporting:
-      "Our collaborative model combines domain expertise with long-term partnership, helping teams move faster while building sustainable internal capability.",
-    reverse: true,
+      "Specialized consulting and staffing that help teams move faster.",
   },
   {
     icon: <Network className="size-10 sm:size-11" strokeWidth={1.5} />,
     title: "Innovation Through the Right Technology Landscape",
     description:
-      "Every business has unique challenges. We identify the right combination of technologies, platforms, and engineering practices to build innovative, efficient, and future-ready solutions tailored to your business goals.",
-    supporting:
-      "We emphasize practical innovation, flexible architecture, and measurable business outcomes that align technology investment with strategic priorities.",
-    reverse: false,
+      "Practical innovation aligned to the right platforms and outcomes.",
   },
 ] as const;
 
@@ -90,26 +81,26 @@ function TitleReveal() {
         initial={{ opacity: 0, y: 24 }}
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
         transition={{ duration: 0.65, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        className="mt-14 space-y-6 lg:space-y-0"
+        className="mt-10 space-y-6 lg:space-y-0"
       >
-        <div className="relative mx-auto max-w-6xl">
-          <div
-            className="pointer-events-none absolute left-1/2 top-6 hidden h-[calc(100%-1.5rem)] w-px -translate-x-1/2 bg-[linear-gradient(180deg,transparent,rgba(96,165,250,0.35),transparent)] lg:block"
-            aria-hidden
-          />
-          <div className="grid gap-6 lg:grid-cols-3">
-            {features.map((feature, index) => (
+        <div className="relative mx-auto max-w-6xl overflow-hidden">
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-[linear-gradient(90deg,rgba(255,255,255,1)_0%,rgba(255,255,255,0)_100%)]" aria-hidden />
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-[linear-gradient(270deg,rgba(255,255,255,1)_0%,rgba(255,255,255,0)_100%)]" aria-hidden />
+          <motion.div
+            animate={{ x: ["0%", "-50%"] }}
+            transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
+            className="flex w-max gap-5 pb-3"
+          >
+            {features.concat(features).map((feature, index) => (
               <IntroFeaturePanel
-                key={feature.title}
+                key={`${feature.title}-${index}`}
                 icon={feature.icon}
                 title={feature.title}
                 description={feature.description}
-                supporting={feature.supporting}
-                reverse={feature.reverse}
                 index={index}
               />
             ))}
-          </div>
+          </motion.div>
         </div>
       </motion.div>
     </div>
@@ -157,9 +148,7 @@ export function CompanyIntroductionSection() {
             Ready to Transform Your Business?
           </h3>
           <p className="mt-4 text-base leading-7 text-slate-600">
-            Discover how Data Acies combines engineering excellence, intelligent
-            automation, and enterprise expertise to accelerate digital
-            transformation.
+            Engineering-led transformation for cloud, data, and automation initiatives.
           </p>
           <Link
             href={ROUTES.about}

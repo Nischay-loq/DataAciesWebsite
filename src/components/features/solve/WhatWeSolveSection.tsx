@@ -153,8 +153,8 @@ export function WhatWeSolveSection() {
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row">
-              <Link href={ROUTES.solutions} className={cn(buttonVariants(), "rounded-full px-5")}>
-                Explore Our Solutions
+              <Link href={ROUTES.products} className={cn(buttonVariants(), "rounded-full px-5")}> 
+                Explore Products
               </Link>
               <Link
                 href={`${ROUTES.contact}#contact-section`}

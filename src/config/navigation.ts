@@ -8,6 +8,8 @@ export type NavItem = {
 
 export const mainNavigation: NavItem[] = [
   { label: "Services", href: ROUTES.services },
+  { label: "Products", href: ROUTES.products },
+  { label: "What We Solve", href: ROUTES.whatWeSolve },
   { label: "Solutions", href: ROUTES.solutions },
   { label: "Case Studies", href: ROUTES.caseStudies },
   { label: "About", href: ROUTES.about },
@@ -22,8 +24,8 @@ export const footerNavigation = {
   ],
   services: [
     { label: "AI Strategy", href: ROUTES.services },
-    { label: "Data Engineering", href: ROUTES.solutions },
-    { label: "ML Operations", href: ROUTES.solutions },
+    { label: "Data Engineering", href: ROUTES.products },
+    { label: "ML Operations", href: ROUTES.whatWeSolve },
   ],
   resources: [
     { label: "Blog", href: ROUTES.blog },

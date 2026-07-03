@@ -9,7 +9,7 @@ const quickLinks = [
   { label: "About", href: ROUTES.about },
   { label: "Products", href: ROUTES.products },
   { label: "Services", href: ROUTES.services },
-  { label: "Industries", href: ROUTES.industries },
+  { label: "What We Solve", href: ROUTES.whatWeSolve },
   { label: "Contact", href: `${ROUTES.contact}#contact-section` },
 ] as const;
 

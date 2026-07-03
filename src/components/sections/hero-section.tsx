@@ -31,7 +31,7 @@ export function HeroSection() {
       />
 
       <div className="relative mx-auto max-w-7xl px-container-x py-20 sm:py-24 lg:min-h-[calc(100svh-6.5rem)] lg:py-28">
-        <div className="grid gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.94fr)] lg:items-center xl:gap-20">
+        <div className="grid gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.98fr)] lg:items-stretch xl:gap-20">
           <div className="max-w-2xl">
             <motion.p
               custom={0}
@@ -59,7 +59,7 @@ export function HeroSection() {
               variants={reveal}
               initial="hidden"
               animate="visible"
-              className="mt-6 min-h-[3.5rem] sm:min-h-[4rem]"
+              className="mt-6 min-h-14 sm:min-h-16"
             >
               <TypingHeadline
                 startDelay={900}
@@ -133,16 +133,16 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}
-            className="relative mx-auto w-full max-w-[38rem] lg:ml-auto lg:mr-0"
+            className="relative mx-auto flex h-full w-full max-w-[40rem] self-stretch lg:ml-auto lg:mr-0 lg:max-w-none"
           >
             <div
               className="pointer-events-none absolute -inset-8 -z-10 rounded-[3rem] bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.12),transparent_62%)] blur-2xl"
               aria-hidden
             />
-            <div className="rounded-[2.25rem] border border-slate-200 bg-white p-4 shadow-[0_20px_60px_rgba(15,23,42,0.08)]">
-              <div className="overflow-hidden rounded-[1.75rem] border border-slate-200 bg-slate-50">
+            <div className="flex h-full min-h-[32rem] w-full rounded-[2.25rem] border border-slate-200 bg-white p-3 shadow-[0_20px_60px_rgba(15,23,42,0.08)] sm:p-4 lg:min-h-[calc(100svh-13rem)]">
+              <div className="relative h-full min-h-[30rem] w-full overflow-hidden rounded-[1.75rem] border border-slate-200 bg-slate-50 lg:min-h-[calc(100svh-15rem)]">
                 <video
-                  className="block aspect-[16/10] h-full w-full object-contain object-center"
+                  className="block h-full w-full object-cover object-center"
                   autoPlay
                   muted
                   loop
@@ -153,14 +153,11 @@ export function HeroSection() {
                   tabIndex={-1}
                   aria-hidden
                 >
-                  <source src="/video1.mp4" type="video/mp4" />
+                  <source src="/DataAcies_video.mp4" type="video/mp4" />
                   Your browser does not support background video.
                 </video>
               </div>
             </div>
-            <p className="mt-4 text-center text-xs font-medium uppercase tracking-[0.18em] text-slate-500 lg:text-right" aria-hidden>
-              Enterprise platform preview
-            </p>
           </motion.div>
         </div>
       </div>

@@ -22,18 +22,15 @@ const navItems: HeaderNavItem[] = [
   { label: "About", href: ROUTES.about, matchPaths: [ROUTES.about] },
   {
     label: "Products",
-    href: `${ROUTES.solutions}#products-section`,
-    sectionId: "products-section",
-    matchPaths: [ROUTES.solutions],
+    href: ROUTES.products,
+    matchPaths: [ROUTES.products],
   },
   {
     label: "What We Solve",
-    href: `${ROUTES.solutions}#what-we-solve`,
-    sectionId: "what-we-solve",
-    matchPaths: [ROUTES.solutions],
+    href: ROUTES.whatWeSolve,
+    matchPaths: [ROUTES.whatWeSolve],
   },
   { label: "Services", href: ROUTES.services, matchPaths: [ROUTES.services] },
-  { label: "Industries", href: ROUTES.industries },
   {
     label: "Contact",
     href: `${ROUTES.contact}#contact-section`,
@@ -92,11 +89,9 @@ export function SiteHeader() {
   }, [isDrawerOpen]);
 
   useEffect(() => {
-    const sectionIds = navItems
+    const sections = navItems
       .map((item) => item.sectionId)
-      .filter((sectionId): sectionId is string => Boolean(sectionId));
-
-    const sections = sectionIds
+      .filter((sectionId): sectionId is string => Boolean(sectionId))
       .map((sectionId) => document.getElementById(sectionId))
       .filter((section): section is HTMLElement => Boolean(section));
 
@@ -139,10 +134,10 @@ export function SiteHeader() {
       <Container size="wide" className="px-0">
         <div
           className={cn(
-            "grid h-[4.5rem] grid-cols-[auto_1fr_auto] items-center gap-3 rounded-full border px-4 shadow-lg transition-all duration-300 sm:h-20 sm:px-5",
-            "border-white/40 bg-white/[0.92] backdrop-blur-xl",
+            "grid h-18 grid-cols-[auto_1fr_auto] items-center gap-3 rounded-full border px-4 shadow-lg transition-all duration-300 sm:h-20 sm:px-5",
+            "border-white/40 bg-white/92 backdrop-blur-xl",
             isScrolled &&
-              "border-white/60 bg-white/[0.97] shadow-[0_18px_55px_rgba(15,23,42,0.13)] backdrop-blur-2xl",
+              "border-white/60 bg-white/97 shadow-[0_18px_55px_rgba(15,23,42,0.13)] backdrop-blur-2xl",
           )}
         >
           <Link
@@ -184,7 +179,7 @@ export function SiteHeader() {
             <Link
               href={`${ROUTES.contact}#contact-section`}
               className={cn(
-                "hidden h-11 items-center rounded-full bg-gradient-to-r from-[#2563EB] via-[#1D4ED8] to-[#0EA5E9] px-5 font-sans text-sm font-semibold text-white shadow-[0_12px_34px_rgba(37,99,235,0.28)] transition-all duration-300",
+                "hidden h-11 items-center rounded-full bg-linear-to-r from-[#2563EB] via-[#1D4ED8] to-[#0EA5E9] px-5 font-sans text-sm font-semibold text-white shadow-[0_12px_34px_rgba(37,99,235,0.28)] transition-all duration-300",
                 "hover:-translate-y-0.5 hover:shadow-[0_16px_44px_rgba(37,99,235,0.38)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563EB]/35 focus-visible:ring-offset-2 focus-visible:ring-offset-white/80 lg:inline-flex",
               )}
             >
@@ -224,7 +219,7 @@ export function SiteHeader() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 28 }}
               transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-              className="fixed right-4 top-[5.75rem] z-50 w-[min(22rem,calc(100vw-2rem))] overflow-hidden rounded-[1.75rem] border border-white/60 bg-white/95 p-3 shadow-[0_24px_80px_rgba(15,23,42,0.18)] backdrop-blur-2xl lg:hidden"
+              className="fixed right-4 top-23 z-50 w-[min(22rem,calc(100vw-2rem))] overflow-hidden rounded-[1.75rem] border border-white/60 bg-white/95 p-3 shadow-[0_24px_80px_rgba(15,23,42,0.18)] backdrop-blur-2xl lg:hidden"
             >
               <nav className="flex flex-col gap-1" aria-label="Mobile navigation">
                 {navItems.map((item) => (
@@ -249,7 +244,7 @@ export function SiteHeader() {
               <Link
                 href={`${ROUTES.contact}#contact-section`}
                 onClick={() => setIsDrawerOpen(false)}
-                className="mt-3 flex h-12 items-center justify-center rounded-full bg-gradient-to-r from-[#2563EB] via-[#1D4ED8] to-[#0EA5E9] px-5 font-sans text-sm font-semibold text-white shadow-[0_14px_36px_rgba(37,99,235,0.32)] transition hover:-translate-y-0.5"
+                className="mt-3 flex h-12 items-center justify-center rounded-full bg-linear-to-r from-[#2563EB] via-[#1D4ED8] to-[#0EA5E9] px-5 font-sans text-sm font-semibold text-white shadow-[0_14px_36px_rgba(37,99,235,0.32)] transition hover:-translate-y-0.5"
               >
                 Book a Consultation
               </Link>

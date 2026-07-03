@@ -77,12 +77,6 @@ export function TypingHeadline({ className, startDelay = 0 }: TypingHeadlineProp
         <span className="inline-block min-w-[24ch] sm:min-w-[25ch]">
           {visibleText}
         </span>
-        {!prefersReducedMotion && (
-          <span
-            className="ml-0.5 inline-block h-[1.05em] w-0.5 translate-y-px animate-cursor-blink bg-primary align-middle"
-            aria-hidden
-          />
-        )}
       </span>
     </>
   );

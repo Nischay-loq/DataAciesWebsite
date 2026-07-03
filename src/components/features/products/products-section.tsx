@@ -95,7 +95,7 @@ export function ProductsSection() {
                       Book a Demo
                     </Link>
                     <Link
-                      href="#what-we-solve"
+                      href={ROUTES.whatWeSolve}
                       className={cn(
                         buttonVariants({ variant: "outline" }),
                         "rounded-full border-slate-300 bg-white px-5 text-slate-800",

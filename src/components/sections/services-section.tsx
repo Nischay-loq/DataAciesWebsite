@@ -59,6 +59,11 @@ const services: Service[] = [
     description: "Protect your data with enterprise-grade security, compliance, and privacy measures.",
     icon: ShieldCheck,
   },
+  {
+    title: "Site Reliability Engineering",
+    description: "Keep platforms dependable with proactive monitoring, incident response, and automation.",
+    icon: Code2,
+  },
 ];
 
 const supportCards = [
@@ -89,9 +94,9 @@ function DataIllustration() {
         <div className="absolute inset-14 rounded-full border border-sky-100/80 bg-[radial-gradient(circle_at_center,rgba(191,219,254,0.15),transparent_68%)]" aria-hidden />
         <div className="absolute left-1/2 top-1/2 size-36 -translate-x-1/2 -translate-y-1/2 rounded-full border border-slate-200/80 bg-white shadow-[0_20px_60px_rgba(37,99,235,0.08)] sm:size-44" aria-hidden>
           <div className="absolute inset-5 rounded-full bg-[linear-gradient(180deg,#f8fbff_0%,#eaf2ff_100%)] shadow-inner" />
-          <div className="absolute inset-x-4 top-7 h-6 rounded-full bg-gradient-to-r from-[#d9e8ff] via-white to-[#c8dcff]" />
-          <div className="absolute inset-x-4 top-13 h-6 rounded-full bg-gradient-to-r from-[#2f6bff] via-[#5ea0ff] to-[#1d4ed8] shadow-[0_4px_12px_rgba(37,99,235,0.24)]" />
-          <div className="absolute inset-x-4 top-19 h-6 rounded-full bg-gradient-to-r from-[#d9e8ff] via-white to-[#c8dcff]" />
+          <div className="absolute inset-x-4 top-7 h-6 rounded-full bg-linear-to-r from-[#d9e8ff] via-white to-[#c8dcff]" />
+          <div className="absolute inset-x-4 top-13 h-6 rounded-full bg-linear-to-r from-[#2f6bff] via-[#5ea0ff] to-[#1d4ed8] shadow-[0_4px_12px_rgba(37,99,235,0.24)]" />
+          <div className="absolute inset-x-4 top-19 h-6 rounded-full bg-linear-to-r from-[#d9e8ff] via-white to-[#c8dcff]" />
         </div>
         <div className="absolute left-1/2 top-1/2 h-48 w-40 -translate-x-1/2 -translate-y-1/2 rounded-[2.5rem] border border-slate-200/60 bg-[linear-gradient(180deg,rgba(255,255,255,0.95)_0%,rgba(245,249,255,0.92)_100%)] shadow-[0_18px_40px_rgba(37,99,235,0.08)] sm:h-56 sm:w-48" aria-hidden />
 
@@ -99,7 +104,7 @@ function DataIllustration() {
           aria-hidden
           animate={{ y: [0, -10, 0] }}
           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute left-0 top-10 w-[9rem] rounded-[1.75rem] border border-white/70 bg-white/85 p-3 shadow-[0_16px_40px_rgba(37,99,235,0.08)] backdrop-blur-sm sm:left-3 sm:w-[10.5rem]"
+          className="absolute left-0 top-10 w-36 rounded-[1.75rem] border border-white/70 bg-white/85 p-3 shadow-[0_16px_40px_rgba(37,99,235,0.08)] backdrop-blur-sm sm:left-3 sm:w-42"
         >
           <div className="flex items-center justify-between text-[0.55rem] font-semibold uppercase tracking-[0.18em] text-slate-400">
             <span>Dashboard</span>
@@ -120,7 +125,7 @@ function DataIllustration() {
           aria-hidden
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute right-1 top-8 w-[9.5rem] rounded-[1.75rem] border border-white/70 bg-white/85 p-3 shadow-[0_16px_40px_rgba(37,99,235,0.08)] backdrop-blur-sm sm:right-4 sm:w-[11rem]"
+          className="absolute right-1 top-8 w-38 rounded-[1.75rem] border border-white/70 bg-white/85 p-3 shadow-[0_16px_40px_rgba(37,99,235,0.08)] backdrop-blur-sm sm:right-4 sm:w-44"
         >
           <div className="flex items-center justify-between text-[0.55rem] font-semibold uppercase tracking-[0.18em] text-slate-400">
             <span>Analytics</span>
@@ -135,7 +140,7 @@ function DataIllustration() {
           aria-hidden
           animate={{ y: [0, -8, 0] }}
           transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute left-10 bottom-4 w-[10rem] rounded-[1.75rem] border border-white/70 bg-white/85 p-3 shadow-[0_16px_40px_rgba(37,99,235,0.08)] backdrop-blur-sm sm:left-14 sm:w-[12rem]"
+          className="absolute left-10 bottom-4 w-[10rem] rounded-[1.75rem] border border-white/70 bg-white/85 p-3 shadow-[0_16px_40px_rgba(37,99,235,0.08)] backdrop-blur-sm sm:left-14 sm:w-48"
         >
           <div className="flex items-center gap-2 text-[0.55rem] font-semibold uppercase tracking-[0.18em] text-slate-400">
             <span className="size-2 rounded-full bg-primary" />
@@ -147,7 +152,7 @@ function DataIllustration() {
               <span>04</span>
             </div>
             <div className="mt-2 h-1 rounded-full bg-blue-100">
-              <div className="h-full w-3/4 rounded-full bg-gradient-to-r from-[#2f6bff] to-[#5ea0ff]" />
+              <div className="h-full w-3/4 rounded-full bg-linear-to-r from-[#2f6bff] to-[#5ea0ff]" />
             </div>
           </div>
         </motion.div>
@@ -156,7 +161,7 @@ function DataIllustration() {
           aria-hidden
           animate={{ x: [0, 8, 0] }}
           transition={{ duration: 13, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute right-4 bottom-12 w-[8.5rem] rounded-[1.6rem] border border-white/70 bg-white/85 p-3 shadow-[0_16px_40px_rgba(37,99,235,0.08)] backdrop-blur-sm sm:right-8 sm:w-[9.5rem]"
+          className="absolute right-4 bottom-12 w-34 rounded-[1.6rem] border border-white/70 bg-white/85 p-3 shadow-[0_16px_40px_rgba(37,99,235,0.08)] backdrop-blur-sm sm:right-8 sm:w-38"
         >
           <div className="flex items-center gap-2 text-[0.55rem] font-semibold uppercase tracking-[0.18em] text-slate-400">
             <span className="size-2 rounded-full bg-[#5ea0ff]" />

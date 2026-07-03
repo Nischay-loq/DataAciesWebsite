@@ -19,7 +19,7 @@ export function TechnologyAssistanceSection() {
   return (
     <section
       aria-labelledby="technology-assistance-heading"
-      className="relative overflow-hidden px-4 pb-12 pt-4 sm:px-6 sm:pb-16 lg:px-8"
+      className="relative overflow-hidden px-4 pb-10 pt-3 sm:px-6 sm:pb-12 lg:px-8"
     >
       <div
         className="pointer-events-none absolute inset-x-0 top-0 h-full bg-[radial-gradient(circle_at_18%_18%,rgba(59,130,246,0.08),transparent_28%),radial-gradient(circle_at_82%_28%,rgba(96,165,250,0.08),transparent_30%),linear-gradient(180deg,rgba(248,250,252,0.98)_0%,rgba(244,248,255,0.88)_100%)]"
@@ -39,7 +39,7 @@ export function TechnologyAssistanceSection() {
         transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
       />
 
-      <div className="relative mx-auto max-w-7xl rounded-[2.25rem] border border-slate-200/70 bg-white/80 px-6 py-16 shadow-[0_18px_55px_rgba(15,23,42,0.05)] backdrop-blur-sm sm:px-10 sm:py-20 lg:px-14 lg:py-24">
+      <div className="relative mx-auto max-w-7xl rounded-[2rem] border border-blue-200/70 bg-[linear-gradient(180deg,rgba(37,99,235,0.12)_0%,rgba(59,130,246,0.08)_100%)] px-5 py-10 shadow-[0_18px_55px_rgba(15,23,42,0.05)] backdrop-blur-sm sm:px-8 sm:py-12 lg:px-12 lg:py-14">
         <Container className="relative px-0">
           <div className="mx-auto max-w-3xl text-center">
             <motion.div
@@ -49,7 +49,7 @@ export function TechnologyAssistanceSection() {
               whileInView="visible"
               viewport={{ once: true, margin: "-60px" }}
             >
-              <span className="inline-flex items-center gap-2 rounded-full border border-blue-200/80 bg-blue-50 px-4 py-1.5 text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-primary">
+              <span className="inline-flex items-center gap-2 rounded-full border border-blue-100/70 bg-white/80 px-4 py-1.5 text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-blue-700 shadow-sm">
                 <Sparkles className="size-3.5" aria-hidden />
                 Professional Technology Assistance
               </span>
@@ -62,7 +62,7 @@ export function TechnologyAssistanceSection() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-60px" }}
-              className="mx-auto mt-6 max-w-4xl font-heading text-[clamp(2.35rem,6vw,4.4rem)] font-semibold leading-[0.95] tracking-[-0.06em] text-slate-950"
+              className="mx-auto mt-5 max-w-4xl font-heading text-[clamp(2rem,5vw,3.6rem)] font-semibold leading-[0.98] tracking-[-0.055em] text-blue-950"
             >
               Professional Technology Assistance
             </motion.h2>
@@ -73,7 +73,7 @@ export function TechnologyAssistanceSection() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-60px" }}
-              className="mx-auto mt-6 max-w-2xl text-balance text-lg leading-8 text-slate-600"
+              className="mx-auto mt-4 max-w-2xl text-balance text-base leading-7 text-slate-700 sm:text-[1.03rem]"
             >
               Where Technology Meets Tailored Solutions and Innovation Drives
               Success
@@ -85,12 +85,12 @@ export function TechnologyAssistanceSection() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-60px" }}
-              className="mt-10"
+              className="mt-8"
             >
               <Link
                 href={ROUTES.contact}
                 aria-label="Contact Us for IT Consulting"
-                className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full border border-blue-200/80 bg-white px-6 py-3.5 text-sm font-semibold text-slate-900 shadow-[0_12px_30px_rgba(15,23,42,0.06)] transition-all duration-300 hover:-translate-y-0.5 hover:border-blue-300 hover:shadow-[0_18px_42px_rgba(37,99,235,0.14)]"
+                className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full border border-blue-200/80 bg-white px-5 py-3 text-sm font-semibold text-blue-800 shadow-[0_12px_30px_rgba(15,23,42,0.06)] transition-all duration-300 hover:-translate-y-0.5 hover:border-blue-300 hover:shadow-[0_18px_42px_rgba(37,99,235,0.14)]"
               >
                 <span className="absolute inset-0 bg-[linear-gradient(120deg,transparent_10%,rgba(59,130,246,0.12)_45%,transparent_80%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                 <span
@@ -113,7 +113,7 @@ export function TechnologyAssistanceSection() {
             whileInView={{ scaleX: 1 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.7, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="mx-auto mt-16 h-px max-w-4xl origin-left"
+            className="mx-auto mt-12 h-px max-w-4xl origin-left"
             style={{
               backgroundImage:
                 "linear-gradient(90deg,rgba(0,0,0,0),rgba(125,211,252,0.7),rgba(0,0,0,0))",
@@ -127,9 +127,9 @@ export function TechnologyAssistanceSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.7, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
-            className="pointer-events-none mx-auto mt-10 max-w-5xl"
+            className="pointer-events-none mx-auto mt-8 max-w-5xl"
           >
-            <div className="h-14 rounded-[2rem] bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.12),transparent_70%)] [clip-path:polygon(0_55%,14%_36%,32%_48%,50%_64%,68%_49%,86%_35%,100%_56%,100%_100%,0_100%)]" />
+            <div className="h-10 rounded-[1.5rem] bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.12),transparent_70%)] [clip-path:polygon(0_55%,14%_36%,32%_48%,50%_64%,68%_49%,86%_35%,100%_56%,100%_100%,0_100%)]" />
           </motion.div>
         </Container>
       </div>

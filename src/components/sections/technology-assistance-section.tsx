@@ -28,13 +28,13 @@ export function TechnologyAssistanceSection() {
 
       <motion.div
         aria-hidden
-        className="pointer-events-none absolute left-6 top-12 hidden size-48 rounded-full bg-blue-200/20 blur-3xl sm:block lg:left-16"
+        className="pointer-events-none absolute left-6 top-12 hidden size-48 transform-gpu rounded-full bg-blue-200/20 blur-3xl will-change-transform sm:block lg:left-16"
         animate={{ x: [0, 14, 0], y: [0, -10, 0] }}
         transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
         aria-hidden
-        className="pointer-events-none absolute right-8 top-24 hidden size-64 rounded-full bg-sky-200/20 blur-3xl sm:block lg:right-16"
+        className="pointer-events-none absolute right-8 top-24 hidden size-64 transform-gpu rounded-full bg-sky-200/20 blur-3xl will-change-transform sm:block lg:right-16"
         animate={{ x: [0, -16, 0], y: [0, 12, 0] }}
         transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
       />

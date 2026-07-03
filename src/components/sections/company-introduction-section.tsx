@@ -87,7 +87,7 @@ function TitleReveal() {
           <motion.div
             animate={{ x: ["0%", "-50%"] }}
             transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
-            className="flex w-max gap-5 pb-3"
+            className="flex w-max transform-gpu gap-5 pb-3 will-change-transform"
           >
             {features.concat(features).map((feature, index) => (
               <IntroFeaturePanel
@@ -118,13 +118,13 @@ export function CompanyIntroductionSection() {
       />
       <motion.div
         aria-hidden
-        className="pointer-events-none absolute left-8 top-20 hidden size-56 rounded-full border border-blue-100/70 bg-blue-100/20 blur-2xl lg:block"
+        className="pointer-events-none absolute left-8 top-20 hidden size-56 transform-gpu rounded-full border border-blue-100/70 bg-blue-100/20 blur-2xl will-change-transform lg:block"
         animate={{ y: [0, -12, 0] }}
         transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
         aria-hidden
-        className="pointer-events-none absolute right-0 top-1/3 hidden size-72 rounded-full border border-sky-100/70 bg-sky-100/20 blur-3xl lg:block"
+        className="pointer-events-none absolute right-0 top-1/3 hidden size-72 transform-gpu rounded-full border border-sky-100/70 bg-sky-100/20 blur-3xl will-change-transform lg:block"
         animate={{ y: [0, 14, 0] }}
         transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
       />

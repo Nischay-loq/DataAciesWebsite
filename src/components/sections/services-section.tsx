@@ -196,7 +196,7 @@ function DataIllustration() {
           aria-hidden
           animate={{ y: [0, -10, 0] }}
           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute left-0 top-10 w-36 rounded-[1.75rem] border border-white/70 bg-white/85 p-3 shadow-[0_16px_40px_rgba(37,99,235,0.08)] backdrop-blur-sm sm:left-3 sm:w-42"
+          className="absolute left-0 top-10 w-36 transform-gpu rounded-[1.75rem] border border-white/70 bg-white/85 p-3 shadow-[0_16px_40px_rgba(37,99,235,0.08)] backdrop-blur-sm will-change-transform sm:left-3 sm:w-42"
         >
           <div className="flex items-center justify-between text-[0.55rem] font-semibold uppercase tracking-[0.18em] text-slate-400">
             <span>Dashboard</span>
@@ -217,7 +217,7 @@ function DataIllustration() {
           aria-hidden
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute right-1 top-8 w-38 rounded-[1.75rem] border border-white/70 bg-white/85 p-3 shadow-[0_16px_40px_rgba(37,99,235,0.08)] backdrop-blur-sm sm:right-4 sm:w-44"
+          className="absolute right-1 top-8 w-38 transform-gpu rounded-[1.75rem] border border-white/70 bg-white/85 p-3 shadow-[0_16px_40px_rgba(37,99,235,0.08)] backdrop-blur-sm will-change-transform sm:right-4 sm:w-44"
         >
           <div className="flex items-center justify-between text-[0.55rem] font-semibold uppercase tracking-[0.18em] text-slate-400">
             <span>Analytics</span>
@@ -232,7 +232,7 @@ function DataIllustration() {
           aria-hidden
           animate={{ y: [0, -8, 0] }}
           transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute left-10 bottom-4 w-[10rem] rounded-[1.75rem] border border-white/70 bg-white/85 p-3 shadow-[0_16px_40px_rgba(37,99,235,0.08)] backdrop-blur-sm sm:left-14 sm:w-48"
+          className="absolute left-10 bottom-4 w-[10rem] transform-gpu rounded-[1.75rem] border border-white/70 bg-white/85 p-3 shadow-[0_16px_40px_rgba(37,99,235,0.08)] backdrop-blur-sm will-change-transform sm:left-14 sm:w-48"
         >
           <div className="flex items-center gap-2 text-[0.55rem] font-semibold uppercase tracking-[0.18em] text-slate-400">
             <span className="size-2 rounded-full bg-primary" />
@@ -253,7 +253,7 @@ function DataIllustration() {
           aria-hidden
           animate={{ x: [0, 8, 0] }}
           transition={{ duration: 13, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute right-4 bottom-12 w-34 rounded-[1.6rem] border border-white/70 bg-white/85 p-3 shadow-[0_16px_40px_rgba(37,99,235,0.08)] backdrop-blur-sm sm:right-8 sm:w-38"
+          className="absolute right-4 bottom-12 w-34 transform-gpu rounded-[1.6rem] border border-white/70 bg-white/85 p-3 shadow-[0_16px_40px_rgba(37,99,235,0.08)] backdrop-blur-sm will-change-transform sm:right-8 sm:w-38"
         >
           <div className="flex items-center gap-2 text-[0.55rem] font-semibold uppercase tracking-[0.18em] text-slate-400">
             <span className="size-2 rounded-full bg-[#5ea0ff]" />

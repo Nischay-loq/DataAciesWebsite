@@ -111,13 +111,13 @@ export function WhyChooseUsSection() {
       />
       <motion.div
         aria-hidden
-        className="pointer-events-none absolute -left-10 top-1/3 hidden size-64 rounded-full border border-blue-100/70 bg-blue-100/20 blur-3xl lg:block"
+        className="pointer-events-none absolute -left-10 top-1/3 hidden size-64 transform-gpu rounded-full border border-blue-100/70 bg-blue-100/20 blur-3xl will-change-transform lg:block"
         animate={{ y: [0, -14, 0] }}
         transition={{ duration: 19, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
         aria-hidden
-        className="pointer-events-none absolute right-0 top-24 hidden size-72 rounded-full border border-sky-100/70 bg-sky-100/20 blur-3xl lg:block"
+        className="pointer-events-none absolute right-0 top-24 hidden size-72 transform-gpu rounded-full border border-sky-100/70 bg-sky-100/20 blur-3xl will-change-transform lg:block"
         animate={{ y: [0, 16, 0] }}
         transition={{ duration: 21, repeat: Infinity, ease: "easeInOut" }}
       />

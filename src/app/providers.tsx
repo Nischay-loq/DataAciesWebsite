@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { MotionConfig } from "motion/react";
 
 type Props = { children: React.ReactNode };
 
@@ -41,11 +42,11 @@ export default function Providers({ children }: Props) {
   }, []);
 
   return (
-    <>
+    <MotionConfig reducedMotion="user">
       {children}
       <div style={{ display: "none" }} aria-hidden>
         {/* Accessibility helper: ensure focus styles are available when JS runs */}
       </div>
-    </>
+    </MotionConfig>
   );
 }

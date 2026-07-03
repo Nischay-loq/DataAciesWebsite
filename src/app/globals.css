@@ -499,3 +499,16 @@
     animation: cursor-blink 1s step-end infinite;
   }
 }
+
+/* Respect users who prefer reduced motion: neutralize CSS transitions,
+   keyframe animations and smooth scrolling for a calmer, cheaper experience. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

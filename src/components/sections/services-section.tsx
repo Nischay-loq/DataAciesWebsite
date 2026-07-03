@@ -1,68 +1,160 @@
 "use client";
 
-import { motion } from "motion/react";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import {
+  Activity,
   ArrowUpRight,
   BarChart3,
-  Cloud,
+  Check,
   Code2,
   Database,
-  DatabaseZap,
-  LineChart,
+  Globe,
   LockKeyhole,
-  Network,
   ShieldCheck,
   Sparkles,
+  Users,
+  Workflow,
+  X,
   type LucideIcon,
 } from "lucide-react";
 import { Container } from "@/components/layout/container";
 
-type Service = {
+type Highlight = {
   title: string;
   description: string;
+};
+
+type Service = {
+  title: string;
+  tagline: string;
+  description: string;
   icon: LucideIcon;
+  capabilitiesLabel: string;
+  capabilities: string[];
+  highlightsLabel?: string;
+  highlights?: Highlight[];
 };
 
 const services: Service[] = [
   {
-    title: "Data Strategy & Consulting",
-    description: "We help you define the right data strategy and roadmap to align with your business goals and drive growth.",
-    icon: Network,
-  },
-  {
-    title: "Cloud Data Solutions & Transformation",
-    description: "Modernize your data infrastructure with secure, scalable, and cost-effective cloud solutions.",
-    icon: Cloud,
-  },
-  {
-    title: "Data Integration",
-    description: "Seamlessly connect and unify data from diverse sources for a single, consistent view of your business.",
-    icon: DatabaseZap,
-  },
-  {
-    title: "Data Management",
-    description: "Ensure high-quality, reliable, and accessible data through robust governance and management practices.",
+    title: "Data Services",
+    tagline:
+      "Unlock the full potential of your data with the right strategy, insights, and tools.",
+    description:
+      "Our Data Services are designed to empower businesses with the Tools, Insights, and Strategies needed to harness the full potential of our customers’ data assets. By partnering with us, you can unlock valuable opportunities, make data-driven decisions, and stay ahead in today’s Data-Centric world.",
     icon: Database,
-  },
-  {
-    title: "Data Analysis",
-    description: "Extract meaningful insights from your data using advanced analytics and statistical techniques.",
-    icon: BarChart3,
-  },
-  {
-    title: "Data Visualization",
-    description: "Transform complex data into clear, interactive visuals that help you communicate and act with confidence.",
-    icon: LineChart,
-  },
-  {
-    title: "Data Security",
-    description: "Protect your data with enterprise-grade security, compliance, and privacy measures.",
-    icon: ShieldCheck,
+    capabilitiesLabel: "What we offer",
+    capabilities: [
+      "Data Strategy & Consulting",
+      "Cloud Data Solutions & Transformation",
+      "Data Integration",
+      "Data Management",
+      "Data Analysis",
+      "Data Visualization",
+      "Data Security",
+    ],
   },
   {
     title: "Site Reliability Engineering",
-    description: "Keep platforms dependable with proactive monitoring, incident response, and automation.",
-    icon: Code2,
+    tagline:
+      "Build resilient, efficient IT systems with proactive monitoring and automation.",
+    description:
+      "By leveraging our SRE services, customers can benefit from increased System Reliability, Reduced Downtime, Enhanced Performance and Improved Scalability. We are committed to helping you build Resilient and Efficient IT systems that meet the demands of your business and ensure a superior User Experience.",
+    icon: Activity,
+    capabilitiesLabel: "What we offer",
+    capabilities: [
+      "System Monitoring & Incident Response",
+      "Automation & Infrastructure Provisioning",
+      "Performance Optimization",
+      "Fault Tolerance & Resilience",
+      "Capacity Planning",
+      "Security & Compliance",
+      "Collaboration & Knowledge Sharing",
+      "24 × 7 Shared Services Model",
+    ],
+  },
+  {
+    title: "Digital Services",
+    tagline:
+      "Enhance your online presence with innovative development, design, and marketing.",
+    description:
+      "By leveraging our Digital Services, we empower clients to enhance their Online Presence, Streamline Operations, Drive Customer Engagement and Achieve Business Objectives. Our experts combine technical expertise, creative flair and strategic insights to deliver innovative solutions for digital success.",
+    icon: Globe,
+    capabilitiesLabel: "What we offer",
+    capabilities: [
+      "Website & Apps Development",
+      "Native Mobile Application Development",
+      "Micro Services Development",
+      "User Experience (UX) & User Interface (UI) Design",
+      "E-Commerce Solutions — CMS, Web Analytics, Payments, Loyalty",
+      "Digital Marketing",
+      "Customer Relationship Management (CRM)",
+      "Cloud Native Services",
+      "Quality Engineering & Assurance",
+    ],
+  },
+  {
+    title: "Digital Operations",
+    tagline:
+      "Streamline processes and boost productivity with intelligent operations.",
+    description:
+      "By availing our Digital Operations services, our customers can focus on their Core Competencies while benefiting from Streamlined Processes, Increased Productivity, Enhanced Customer Satisfaction and Improved Business Performance. We serve as a Trusted Partner, empowering them to achieve operational excellence and drive business success.",
+    icon: Workflow,
+    capabilitiesLabel: "What we offer",
+    capabilities: [
+      "Process Analysis and Optimization",
+      "Workflow Design and Robotic Process Automation",
+      "Data Management & Automation",
+      "Customer Support and Service Management",
+      "Supply Chain and Logistics Management",
+      "Financial Planning & Accounting (FP&A)",
+      "Reporting and Performance Measurement",
+      "Audit & Compliance Management",
+    ],
+  },
+  {
+    title: "Staffing & IT Consulting",
+    tagline:
+      "Connect with exceptional talent and expert IT consulting you can trust.",
+    description:
+      "At Data Acies Inc., we specialize in connecting exceptional talent with top-tier companies across diverse sectors, including IT, engineering, healthcare, and light industry. As an E-Verified company, we take pride in our commitment to providing a compliant and reliable staffing solution that you can trust.",
+    icon: Users,
+    capabilitiesLabel: "Our specializations",
+    capabilities: [
+      "Staffing Solutions",
+      "IT Consulting",
+      "Talent Acquisition and Management",
+      "IT Project / Program Management",
+      "Technology Assessment and Roadmap",
+      "IT Governance and Compliance",
+      "Training and Skill Development",
+      "IT Support and Maintenance",
+      "Change Management and Transition Support",
+    ],
+    highlightsLabel: "Why choose Data Acies Inc.?",
+    highlights: [
+      {
+        title: "Expertise Across Industries",
+        description:
+          "Our experienced recruiters understand the nuances of each sector, finding candidates who have the right skills and align with your organizational culture.",
+      },
+      {
+        title: "Vast Talent Network",
+        description:
+          "From innovative IT specialists and skilled engineers to dedicated healthcare professionals and efficient light industry workers, we access a broad pool of qualified candidates.",
+      },
+      {
+        title: "Streamlined Recruitment Process",
+        description:
+          "We simplify the hiring journey, handling everything from initial consultations to onboarding, so you can focus on growing your business.",
+      },
+      {
+        title: "Commitment to Quality",
+        description:
+          "We believe in building lasting relationships, going above and beyond to meet your staffing needs and find the right fit for every role.",
+      },
+    ],
   },
 ];
 
@@ -178,7 +270,139 @@ function DataIllustration() {
   );
 }
 
+function ServiceModal({
+  service,
+  onClose,
+}: {
+  service: Service;
+  onClose: () => void;
+}) {
+  const Icon = service.icon;
+
+  return (
+    <motion.div
+      className="fixed inset-0 z-[70] flex items-end justify-center p-0 sm:items-center sm:p-6"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
+    >
+      <button
+        type="button"
+        aria-label="Close service details"
+        onClick={onClose}
+        className="absolute inset-0 bg-slate-950/45 backdrop-blur-sm"
+      />
+
+      <motion.div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="service-modal-title"
+        initial={{ opacity: 0, y: 30, scale: 0.98 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        exit={{ opacity: 0, y: 20, scale: 0.98 }}
+        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        className="relative z-10 flex max-h-[92vh] w-full max-w-2xl flex-col overflow-hidden rounded-t-[1.75rem] border border-slate-200 bg-white shadow-[0_30px_90px_rgba(15,23,42,0.28)] sm:max-h-[85vh] sm:rounded-[1.75rem]"
+      >
+        {/* Header */}
+        <div className="relative overflow-hidden bg-[linear-gradient(180deg,#2463eb_0%,#0f4ed6_100%)] px-6 py-6 text-white sm:px-8">
+          <div
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_90%_0%,rgba(125,211,252,0.32),transparent_45%)]"
+            aria-hidden
+          />
+          <div className="relative flex items-start justify-between gap-4">
+            <div className="flex items-center gap-4">
+              <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-white/15 text-white backdrop-blur-sm">
+                <Icon className="size-6" />
+              </div>
+              <h2
+                id="service-modal-title"
+                className="font-heading text-[1.5rem] font-semibold leading-[1.12] tracking-[-0.03em] sm:text-[1.75rem]"
+              >
+                {service.title}
+              </h2>
+            </div>
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Close"
+              className="flex size-9 shrink-0 items-center justify-center rounded-full bg-white/15 text-white transition hover:bg-white/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+            >
+              <X className="size-5" />
+            </button>
+          </div>
+        </div>
+
+        {/* Body */}
+        <div className="overflow-y-auto px-6 py-6 sm:px-8 sm:py-7">
+          <p className="text-[0.975rem] leading-7 text-slate-600">
+            {service.description}
+          </p>
+
+          <div className="mt-7">
+            <h3 className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-[#1d4ed8]">
+              {service.capabilitiesLabel}
+            </h3>
+            <div className="mt-4 h-0.5 w-7 rounded-full bg-[#2463eb]" aria-hidden />
+            <ul className="mt-5 grid gap-x-6 gap-y-3 sm:grid-cols-2">
+              {service.capabilities.map((item) => (
+                <li key={item} className="flex items-start gap-3">
+                  <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-[#edf4ff] text-[#1d4ed8]">
+                    <Check className="size-3.5" />
+                  </span>
+                  <span className="text-[0.925rem] leading-6 text-slate-700">
+                    {item}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {service.highlights ? (
+            <div className="mt-8 rounded-[1.35rem] border border-slate-100 bg-[linear-gradient(180deg,#f7faff_0%,#eef4ff_100%)] p-5 sm:p-6">
+              <h3 className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-[#1d4ed8]">
+                {service.highlightsLabel}
+              </h3>
+              <div className="mt-5 grid gap-5 sm:grid-cols-2">
+                {service.highlights.map((highlight) => (
+                  <div key={highlight.title}>
+                    <p className="font-heading text-[1rem] font-semibold leading-tight tracking-[-0.02em] text-slate-950">
+                      {highlight.title}
+                    </p>
+                    <p className="mt-1.5 text-[0.875rem] leading-6 text-slate-600">
+                      {highlight.description}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : null}
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
 export function ServicesSection() {
+  const [activeService, setActiveService] = useState<Service | null>(null);
+
+  useEffect(() => {
+    if (!activeService) return;
+
+    const handleKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setActiveService(null);
+    };
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleKey);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKey);
+    };
+  }, [activeService]);
+
   return (
     <section id="services" className="relative overflow-hidden bg-[#f7faff] py-10 sm:py-12 lg:py-16">
       <div
@@ -201,7 +425,7 @@ export function ServicesSection() {
             </span>
 
             <h1 className="mt-6 font-heading text-[clamp(3.1rem,7vw,5.45rem)] font-semibold leading-[0.92] tracking-[-0.06em] text-slate-950 sm:text-[clamp(3.4rem,7vw,5.8rem)]">
-              <span>Data </span>
+              <span>Our </span>
               <span className="text-[#1d4ed8]">Services</span>
             </h1>
 
@@ -211,7 +435,7 @@ export function ServicesSection() {
             </div>
 
             <p className="mt-7 max-w-xl text-[1.05rem] leading-8 text-slate-600 sm:text-[1.1rem]">
-              Our Data Services are designed to empower businesses with the <span className="font-semibold text-[#1d4ed8]">Tools, Insights, and Strategies</span> needed to harness the full potential of our customers’ data assets. By partnering with us, you can unlock valuable opportunities, make data-driven decisions, and stay ahead in today’s Data-Centric world.
+              Our services are designed to empower businesses with the <span className="font-semibold text-[#1d4ed8]">Tools, Insights, and Strategies</span> needed to harness the full potential of technology and data. Explore each service below and click a card to see everything we can do for you.
             </p>
           </motion.div>
 
@@ -226,7 +450,7 @@ export function ServicesSection() {
           </motion.div>
         </div>
 
-        <div className="mt-8 grid gap-6 xl:grid-cols-5 xl:grid-rows-2">
+        <div className="mt-8 grid gap-6 xl:grid-cols-4 xl:grid-rows-2">
           <motion.article
             initial={{ opacity: 0, y: 22 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -270,65 +494,79 @@ export function ServicesSection() {
 
           {services.map((service, index) => {
             const Icon = service.icon;
-            const isQuoteCard = index === services.length - 1;
             return (
-              <motion.article
+              <motion.button
                 key={service.title}
+                type="button"
+                onClick={() => setActiveService(service)}
                 initial={{ opacity: 0, y: 18 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{ duration: 0.5, delay: index * 0.05, ease: [0.22, 1, 0.36, 1] }}
-                className={[
-                  "relative overflow-hidden rounded-[1.45rem] border border-slate-200 bg-white p-5 shadow-[0_10px_28px_rgba(15,23,42,0.04)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(37,99,235,0.09)]",
-                  isQuoteCard ? "bg-[linear-gradient(180deg,#f3f7ff_0%,#eef4ff_100%)]" : "",
-                ].join(" ")}
+                aria-label={`View details for ${service.title}`}
+                className="group relative flex flex-col overflow-hidden rounded-[1.45rem] border border-slate-200 bg-white p-5 text-left shadow-[0_10px_28px_rgba(15,23,42,0.04)] transition duration-300 hover:-translate-y-1 hover:border-[#2f6bff]/50 hover:shadow-[0_18px_40px_rgba(37,99,235,0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2463eb]/40 focus-visible:ring-offset-2"
               >
-                {isQuoteCard ? (
-                  <>
-                    <div className="flex h-full flex-col justify-between">
-                      <div className="inline-flex size-10 items-center justify-center rounded-full bg-[#2463eb] text-white shadow-[0_12px_20px_rgba(37,99,235,0.2)]">
-                        <span className="text-xl font-semibold leading-none">&ldquo;</span>
-                      </div>
-                      <p className="mt-8 max-w-[14rem] text-[1rem] leading-7 text-slate-700">
-                        We don’t just manage data. We unlock its true potential.
-                      </p>
-                      <div className="mt-4 font-heading text-[1.35rem] font-semibold leading-[1.18] tracking-[-0.03em] text-[#1d4ed8]">
-                        Your Data.
-                        <br />
-                        Our Expertise.
-                        <br />
-                        Limitless Possibilities.
-                      </div>
-                    </div>
-                    <div
-                      className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_100%_100%,rgba(59,130,246,0.1),transparent_28%),radial-gradient(circle_at_100%_40%,rgba(37,99,235,0.06),transparent_28%)]"
-                      aria-hidden
-                    />
-                  </>
-                ) : (
-                  <>
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="flex size-12 items-center justify-center rounded-full bg-[#edf4ff] text-[#1d4ed8] shadow-[0_8px_22px_rgba(37,99,235,0.08)]">
-                        <Icon className="size-6" />
-                      </div>
-                      <span className="text-2xl font-semibold leading-none text-[#a5bbff]">
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
-                    </div>
-                    <h3 className="mt-6 max-w-[14rem] font-heading text-[1.2rem] font-semibold leading-[1.15] tracking-[-0.03em] text-slate-950">
-                      {service.title}
-                    </h3>
-                    <div className="mt-4 h-0.5 w-7 rounded-full bg-[#2463eb]" aria-hidden />
-                    <p className="mt-4 text-[0.95rem] leading-7 text-slate-600">
-                      {service.description}
-                    </p>
-                  </>
-                )}
-              </motion.article>
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex size-12 items-center justify-center rounded-full bg-[#edf4ff] text-[#1d4ed8] shadow-[0_8px_22px_rgba(37,99,235,0.08)] transition group-hover:bg-[#2463eb] group-hover:text-white">
+                    <Icon className="size-6" />
+                  </div>
+                  <span className="text-2xl font-semibold leading-none text-[#a5bbff]">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                </div>
+                <h3 className="mt-6 max-w-[15rem] font-heading text-[1.2rem] font-semibold leading-[1.15] tracking-[-0.03em] text-slate-950">
+                  {service.title}
+                </h3>
+                <div className="mt-4 h-0.5 w-7 rounded-full bg-[#2463eb]" aria-hidden />
+                <p className="mt-4 text-[0.95rem] leading-7 text-slate-600">
+                  {service.tagline}
+                </p>
+                <span className="mt-auto inline-flex items-center gap-1.5 pt-5 text-[0.8rem] font-semibold text-[#1d4ed8]">
+                  View details
+                  <ArrowUpRight className="size-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </span>
+              </motion.button>
             );
           })}
+
+          <motion.article
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.5, delay: services.length * 0.05, ease: [0.22, 1, 0.36, 1] }}
+            className="relative overflow-hidden rounded-[1.45rem] border border-slate-200 bg-[linear-gradient(180deg,#f3f7ff_0%,#eef4ff_100%)] p-5 shadow-[0_10px_28px_rgba(15,23,42,0.04)]"
+          >
+            <div className="flex h-full flex-col justify-between">
+              <div className="inline-flex size-10 items-center justify-center rounded-full bg-[#2463eb] text-white shadow-[0_12px_20px_rgba(37,99,235,0.2)]">
+                <span className="text-xl font-semibold leading-none">&ldquo;</span>
+              </div>
+              <p className="mt-8 max-w-[14rem] text-[1rem] leading-7 text-slate-700">
+                We don’t just manage data. We unlock its true potential.
+              </p>
+              <div className="mt-4 font-heading text-[1.35rem] font-semibold leading-[1.18] tracking-[-0.03em] text-[#1d4ed8]">
+                Your Data.
+                <br />
+                Our Expertise.
+                <br />
+                Limitless Possibilities.
+              </div>
+            </div>
+            <div
+              className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_100%_100%,rgba(59,130,246,0.1),transparent_28%),radial-gradient(circle_at_100%_40%,rgba(37,99,235,0.06),transparent_28%)]"
+              aria-hidden
+            />
+          </motion.article>
         </div>
       </Container>
+
+      <AnimatePresence>
+        {activeService ? (
+          <ServiceModal
+            service={activeService}
+            onClose={() => setActiveService(null)}
+          />
+        ) : null}
+      </AnimatePresence>
     </section>
   );
 }

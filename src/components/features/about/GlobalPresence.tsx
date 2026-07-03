@@ -7,6 +7,7 @@ const locations = [
   { city: "Dallas, Texas", role: "Headquarters" },
   { city: "Hyderabad, India", role: "Delivery Center" },
   { city: "Chennai, India", role: "Delivery Center" },
+  { city: "Mumbai, India", role: "Delivery Center" },
 ] as const;
 
 export function GlobalPresence() {

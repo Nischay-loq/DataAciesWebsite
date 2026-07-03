@@ -17,148 +17,152 @@ const reveal = {
   }),
 };
 
-const outcomes = [
-  "Reduce operational complexity",
-  "Improve decision-making",
-  "Accelerate enterprise delivery",
-] as const;
+const trustItems = ["AI Solutions", "Enterprise Platforms", "Intelligent Automation", "Global Delivery"] as const;
 
 export function HeroSection() {
   return (
     <section
       aria-labelledby="hero-heading"
-      className="relative overflow-hidden border-b border-slate-200 bg-white"
+      className="relative overflow-hidden border-b border-slate-200 bg-[linear-gradient(180deg,rgba(248,250,252,0.92)_0%,#ffffff_34%,rgba(243,248,255,0.88)_100%)]"
     >
       <div
-        className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(37,99,235,0.06),transparent_34%),radial-gradient(circle_at_78%_24%,rgba(37,99,235,0.08),transparent_32%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(59,130,246,0.08),transparent_26%),radial-gradient(circle_at_82%_24%,rgba(59,130,246,0.06),transparent_28%),linear-gradient(135deg,rgba(255,255,255,0.35),transparent_45%)]"
         aria-hidden
       />
 
-      <div className="relative mx-auto grid max-w-7xl gap-12 px-container-x py-20 sm:py-24 lg:min-h-[calc(100svh-6.5rem)] lg:grid-cols-[0.92fr_1.08fr] lg:items-center lg:py-24 xl:gap-16">
-        <div className="max-w-2xl">
-          <motion.p
-            custom={0}
-            variants={reveal}
-            initial="hidden"
-            animate="visible"
-            className="text-sm font-semibold uppercase tracking-[0.16em] text-primary"
-          >
-            AI-first digital transformation
-          </motion.p>
+      <div className="relative mx-auto max-w-7xl px-container-x py-20 sm:py-24 lg:min-h-[calc(100svh-6.5rem)] lg:py-28">
+        <div className="grid gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.94fr)] lg:items-center xl:gap-20">
+          <div className="max-w-2xl">
+            <motion.p
+              custom={0}
+              variants={reveal}
+              initial="hidden"
+              animate="visible"
+              className="inline-flex items-center rounded-full border border-blue-100 bg-blue-50/80 px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-primary"
+            >
+              AI-FIRST DIGITAL TRANSFORMATION
+            </motion.p>
 
-          <motion.h1
-            id="hero-heading"
-            custom={0.12}
-            variants={reveal}
-            initial="hidden"
-            animate="visible"
-            className="mt-5 max-w-4xl font-heading text-[3rem] font-semibold leading-[0.98] tracking-[-0.055em] text-slate-950 sm:text-[4rem] lg:text-[5.2rem] xl:text-[5.8rem]"
-          >
-            Engineering the Future of Intelligent Business
-          </motion.h1>
+            <motion.h1
+              id="hero-heading"
+              custom={0.1}
+              variants={reveal}
+              initial="hidden"
+              animate="visible"
+              className="mt-5 max-w-4xl font-heading text-[2.9rem] font-semibold leading-[1.02] tracking-[-0.055em] text-slate-950 sm:text-[4rem] lg:text-[5.1rem] xl:text-[5.6rem]"
+            >
+              Engineering the Future of Intelligent Business
+            </motion.h1>
+
+            <motion.div
+              custom={0.24}
+              variants={reveal}
+              initial="hidden"
+              animate="visible"
+              className="mt-6 min-h-[3.5rem] sm:min-h-[4rem]"
+            >
+              <TypingHeadline
+                startDelay={900}
+                className="text-[1.9rem] font-semibold leading-tight tracking-[-0.04em] text-primary sm:text-[2.4rem] lg:text-[2.95rem]"
+              />
+            </motion.div>
+
+            <motion.p
+              custom={0.36}
+              variants={reveal}
+              initial="hidden"
+              animate="visible"
+              className="mt-6 max-w-xl text-[1.05rem] leading-8 text-slate-600 sm:text-lg"
+            >
+              We design, build, and operate scalable digital solutions that help
+              enterprises automate workflows, improve decision-making, and
+              accelerate growth.
+            </motion.p>
+
+            <motion.div
+              custom={0.48}
+              variants={reveal}
+              initial="hidden"
+              animate="visible"
+              className="mt-8 flex flex-col gap-3 sm:flex-row"
+            >
+              <Link
+                href={`${ROUTES.contact}#contact-section`}
+                className={cn(
+                  buttonVariants({ size: "lg" }),
+                  "h-12 rounded-full px-7 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-md",
+                )}
+              >
+                Book a Consultation
+                <ArrowRight className="size-4" />
+              </Link>
+              <Link
+                href={ROUTES.solutions}
+                className={cn(
+                  buttonVariants({ size: "lg", variant: "outline" }),
+                  "h-12 rounded-full border-slate-300 bg-white px-7 text-slate-800 transition-all duration-300 hover:-translate-y-0.5 hover:border-slate-400 hover:bg-slate-50 hover:shadow-sm",
+                )}
+              >
+                Explore Solutions
+              </Link>
+            </motion.div>
+
+            <motion.div
+              custom={0.6}
+              variants={reveal}
+              initial="hidden"
+              animate="visible"
+              className="mt-8 grid max-w-2xl gap-3 sm:grid-cols-2"
+            >
+              {trustItems.map((item, index) => (
+                <motion.div
+                  key={item}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.64 + index * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                  className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm"
+                >
+                  <CheckCircle2 className="size-4 shrink-0 text-primary" />
+                  <span>{item}</span>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
 
           <motion.div
-            custom={0.2}
-            variants={reveal}
-            initial="hidden"
-            animate="visible"
-            className="mt-7 min-h-[3.25rem] sm:min-h-[4rem]"
+            initial={{ opacity: 0, y: 22 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}
+            className="relative mx-auto w-full max-w-[38rem] lg:ml-auto lg:mr-0"
           >
-            <TypingHeadline
-              startDelay={700}
-              className="text-[2rem] font-semibold leading-tight tracking-[-0.035em] sm:text-[2.75rem] lg:text-[3.15rem]"
+            <div
+              className="pointer-events-none absolute -inset-8 -z-10 rounded-[3rem] bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.12),transparent_62%)] blur-2xl"
+              aria-hidden
             />
-          </motion.div>
-
-          <motion.p
-            custom={0.32}
-            variants={reveal}
-            initial="hidden"
-            animate="visible"
-            className="mt-6 max-w-xl text-lg leading-8 text-slate-600"
-          >
-            Data Acies helps enterprises modernize data platforms, automate
-            workflows, and build intelligent software systems without adding
-            unnecessary complexity.
-          </motion.p>
-
-          <motion.div
-            custom={0.44}
-            variants={reveal}
-            initial="hidden"
-            animate="visible"
-            className="mt-8 grid gap-3 text-sm text-slate-700 sm:grid-cols-3"
-          >
-            {outcomes.map((outcome) => (
-              <div key={outcome} className="flex items-start gap-2">
-                <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-primary" />
-                <span>{outcome}</span>
+            <div className="rounded-[2.25rem] border border-slate-200 bg-white p-4 shadow-[0_20px_60px_rgba(15,23,42,0.08)]">
+              <div className="overflow-hidden rounded-[1.75rem] border border-slate-200 bg-slate-50">
+                <video
+                  className="block aspect-[16/10] h-full w-full object-contain object-center"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  disablePictureInPicture
+                  disableRemotePlayback
+                  tabIndex={-1}
+                  aria-hidden
+                >
+                  <source src="/video1.mp4" type="video/mp4" />
+                  Your browser does not support background video.
+                </video>
               </div>
-            ))}
-          </motion.div>
-
-          <motion.div
-            custom={0.56}
-            variants={reveal}
-            initial="hidden"
-            animate="visible"
-            className="mt-10 flex flex-col gap-3 sm:flex-row"
-          >
-            <Link
-              href={`${ROUTES.contact}#contact-section`}
-              className={cn(buttonVariants({ size: "lg" }), "h-11 rounded-full px-6 shadow-sm")}
-            >
-              Book a Consultation
-              <ArrowRight className="size-4" />
-            </Link>
-            <Link
-              href={ROUTES.solutions}
-              className={cn(
-                buttonVariants({ size: "lg", variant: "outline" }),
-                "h-11 rounded-full border-slate-300 bg-white px-6 text-slate-800",
-              )}
-            >
-              Explore Solutions
-            </Link>
+            </div>
+            <p className="mt-4 text-center text-xs font-medium uppercase tracking-[0.18em] text-slate-500 lg:text-right" aria-hidden>
+              Enterprise platform preview
+            </p>
           </motion.div>
         </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.65, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
-          className="relative lg:pl-2 xl:pl-6"
-        >
-          <div
-            className="absolute inset-6 -z-10 rounded-[2.5rem] bg-blue-100/70 blur-3xl"
-            aria-hidden
-          />
-          <div className="rounded-[2rem] border border-slate-200 bg-slate-50 p-3 shadow-2xl shadow-slate-200/80 lg:rotate-[-1.5deg]">
-            <div className="overflow-hidden rounded-[1.5rem] border border-slate-200 bg-white">
-              <video
-                className="block aspect-[16/10] h-full max-h-[620px] w-full object-contain object-center"
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                disablePictureInPicture
-                disableRemotePlayback
-                tabIndex={-1}
-                aria-hidden
-              >
-                <source src="/video.mp4" type="video/mp4" />
-                Your browser does not support background video.
-              </video>
-            </div>
-          </div>
-          <p
-            className="mt-4 text-center text-xs leading-5 text-slate-500 lg:text-right"
-            aria-hidden
-          >
-            Enterprise platform preview
-          </p>
-        </motion.div>
       </div>
     </section>
   );

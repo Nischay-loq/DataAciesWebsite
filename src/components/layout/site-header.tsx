@@ -32,8 +32,8 @@ const navItems: HeaderNavItem[] = [
     sectionId: "what-we-solve",
     matchPaths: [ROUTES.solutions],
   },
-  { label: "Services", href: "/#services", sectionId: "services" },
-  { label: "Industries", href: "/#industries", sectionId: "industries" },
+  { label: "Services", href: "/#company-introduction", sectionId: "company-introduction" },
+  { label: "Industries", href: ROUTES.industries },
   {
     label: "Contact",
     href: `${ROUTES.contact}#contact-section`,

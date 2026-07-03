@@ -5,15 +5,15 @@ import { cn } from "@/lib/utils";
 import { usePrefersReducedMotion } from "@/hooks/use-media-query";
 
 const PHRASES = [
-  "Data Platforms.",
-  "AI Systems.",
-  "Autonomous Operations.",
+  "Data Platforms",
+  "AI Systems",
+  "Autonomous Operations",
 ] as const;
 
-const TYPING_MS = 58;
-const DELETING_MS = 34;
-const PAUSE_TYPED_MS = 1450;
-const PAUSE_DELETED_MS = 260;
+const TYPING_MS = 62;
+const DELETING_MS = 40;
+const PAUSE_TYPED_MS = 1400;
+const PAUSE_DELETED_MS = 280;
 
 type TypingHeadlineProps = {
   className?: string;
@@ -65,21 +65,21 @@ export function TypingHeadline({ className, startDelay = 0 }: TypingHeadlineProp
   return (
     <>
       <span className="sr-only">
-        Data Platforms, AI Systems, and Autonomous Operations.
+        Data Platforms, AI Systems, and Autonomous Operations
       </span>
       <span
         className={cn(
-          "inline-flex min-h-[1.35em] items-center font-heading text-[1.75rem] font-medium leading-tight tracking-tight text-primary sm:text-[2rem] md:text-[1.75rem] lg:text-[2.125rem]",
+          "inline-flex min-h-[1.35em] items-center whitespace-nowrap font-heading text-[1.75rem] font-medium leading-tight tracking-tight text-primary sm:text-[2rem] md:text-[1.75rem] lg:text-[2.125rem]",
           className,
         )}
         aria-hidden
       >
-        <span className="inline-block min-w-[13ch] sm:min-w-[15ch]">
+        <span className="inline-block min-w-[24ch] sm:min-w-[25ch]">
           {visibleText}
         </span>
         {!prefersReducedMotion && (
           <span
-            className="ml-0.5 inline-block h-[1.05em] w-[2px] translate-y-px animate-cursor-blink bg-primary align-middle"
+            className="ml-0.5 inline-block h-[1.05em] w-0.5 translate-y-px animate-cursor-blink bg-primary align-middle"
             aria-hidden
           />
         )}

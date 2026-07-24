@@ -14,7 +14,7 @@ export const siteConfig = {
   },
   contact: {
     email: "support@dataacies.com",
-    phone: process.env.NEXT_PUBLIC_BUSINESS_PHONE ?? "Available on request",
+    phone: process.env.NEXT_PUBLIC_BUSINESS_PHONE ?? "Available on reques t",
     address:
       process.env.NEXT_PUBLIC_OFFICE_ADDRESS ??
       "India - Serving enterprise clients globally",

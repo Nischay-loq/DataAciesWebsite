@@ -1,137 +1,276 @@
 "use client";
 
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { motion } from "motion/react";
 import { ROUTES } from "@/constants/routes";
 import { Container } from "@/components/layout/container";
 
-const reveal = {
-  hidden: { opacity: 0, y: 20 },
-  visible: (delay = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.55, delay, ease: [0.22, 1, 0.36, 1] as const },
-  }),
-};
-
 export function TechnologyAssistanceSection() {
   return (
     <section
       aria-labelledby="technology-assistance-heading"
-      className="relative overflow-hidden px-4 pb-10 pt-3 sm:px-6 sm:pb-12 lg:px-8"
+      className="relative overflow-hidden bg-white pt-12 sm:pt-16 lg:pt-20 pb-0"
     >
+      {/* 1. LAYERED GRADIENT MESH BACKGROUND */}
       <div
-        className="pointer-events-none absolute inset-x-0 top-0 h-full bg-[radial-gradient(circle_at_18%_18%,rgba(59,130,246,0.08),transparent_28%),radial-gradient(circle_at_82%_28%,rgba(96,165,250,0.08),transparent_30%),linear-gradient(180deg,rgba(248,250,252,0.98)_0%,rgba(244,248,255,0.88)_100%)]"
-        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,#FFFFFF_0%,#F4F8FF_35%,#EFF6FF_65%,rgba(30,58,138,0.06)_100%)]"
+        aria-hidden="true"
       />
 
-      <motion.div
-        aria-hidden
-        className="pointer-events-none absolute left-6 top-12 hidden size-48 transform-gpu rounded-full bg-blue-200/20 blur-3xl will-change-transform sm:block lg:left-16"
-        animate={{ x: [0, 14, 0], y: [0, -10, 0] }}
-        transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        aria-hidden
-        className="pointer-events-none absolute right-8 top-24 hidden size-64 transform-gpu rounded-full bg-sky-200/20 blur-3xl will-change-transform sm:block lg:right-16"
-        animate={{ x: [0, -16, 0], y: [0, 12, 0] }}
-        transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
+      {/* Subtle Outer Radial Navy Depth Glow */}
+      <div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(30,58,138,0.04)_0%,transparent_70%)]"
+        aria-hidden="true"
       />
 
-      <div className="relative mx-auto max-w-7xl rounded-[2rem] border border-blue-200/70 bg-[linear-gradient(180deg,rgba(37,99,235,0.12)_0%,rgba(59,130,246,0.08)_100%)] px-5 py-10 shadow-[0_18px_55px_rgba(15,23,42,0.05)] backdrop-blur-sm sm:px-8 sm:py-12 lg:px-12 lg:py-14">
-        <Container className="relative px-0">
-          <div className="mx-auto max-w-3xl text-center">
-            <motion.div
-              custom={0}
-              variants={reveal}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-60px" }}
+      {/* 2. ANIMATED GLOW ORBS (ELECTRIC BLUE #2563EB & NAVY #1E3A8A) */}
+      {/* Top-Left Orb */}
+      <motion.div
+        aria-hidden="true"
+        className="pointer-events-none absolute -left-24 -top-20 size-96 rounded-full bg-gradient-to-br from-[#2563EB]/25 to-[#1E3A8A]/20 opacity-30 blur-3xl sm:size-[30rem] lg:-left-16"
+        animate={{
+          x: [0, 25, 0],
+          y: [0, -20, 0],
+          scale: [1, 1.1, 1],
+        }}
+        transition={{
+          duration: 18,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+
+      {/* Bottom-Right Orb */}
+      <motion.div
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-28 top-1/3 size-[28rem] rounded-full bg-gradient-to-tl from-[#1E3A8A]/25 via-[#2563EB]/20 to-sky-400/15 opacity-25 blur-3xl sm:size-[34rem] lg:-right-16"
+        animate={{
+          x: [0, -30, 0],
+          y: [0, 25, 0],
+          scale: [1, 1.08, 1],
+        }}
+        transition={{
+          duration: 20,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+
+      {/* Center Ambient Orb */}
+      <motion.div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-1/2 top-10 size-80 -translate-x-1/2 rounded-full bg-blue-500/15 opacity-20 blur-3xl"
+        animate={{
+          scale: [1, 1.15, 1],
+          opacity: [0.15, 0.25, 0.15],
+        }}
+        transition={{
+          duration: 15,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+
+      {/* 3. MASKED DOT GRID WITH HIGHER VISIBILITY */}
+      <div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(#2563eb_1.2px,transparent_1.2px)] [background-size:24px_24px] opacity-14 [mask-image:radial-gradient(ellipse_at_center,black_45%,transparent_85%)]"
+        aria-hidden="true"
+      />
+
+      {/* Blueprint-Inspired SVG Grid Pattern */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.04] [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_80%)]"
+        aria-hidden="true"
+      >
+        <svg className="size-full stroke-blue-900" width="100%" height="100%">
+          <defs>
+            <pattern
+              id="enterprise-blueprint-grid"
+              width="40"
+              height="40"
+              patternUnits="userSpaceOnUse"
             >
-              <span className="inline-flex items-center gap-2 rounded-full border border-blue-100/70 bg-white/80 px-4 py-1.5 text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-blue-700 shadow-sm">
-                <Sparkles className="size-3.5" aria-hidden />
-                Professional Technology Assistance
+              <path d="M 40 0 L 0 0 0 40" fill="none" strokeWidth="1" />
+            </pattern>
+          </defs>
+          <rect
+            width="100%"
+            height="100%"
+            strokeWidth="0"
+            fill="url(#enterprise-blueprint-grid)"
+          />
+        </svg>
+      </div>
+
+      {/* 4. FINE ELECTRIC BLUE LIGHT BEAM ACCENTS */}
+      {/* Diagonal Light Beam (Left) */}
+      <div
+        className="pointer-events-none absolute -top-24 left-1/4 h-[420px] w-0.5 rotate-[32deg] bg-gradient-to-b from-transparent via-blue-500/25 to-transparent blur-[1px]"
+        aria-hidden="true"
+      />
+
+      {/* Diagonal Light Beam (Right) */}
+      <div
+        className="pointer-events-none absolute -top-16 right-1/4 h-[460px] w-0.5 -rotate-[28deg] bg-gradient-to-b from-transparent via-blue-500/20 to-transparent blur-[1px]"
+        aria-hidden="true"
+      />
+
+      {/* Horizontal Light Ray Accent behind header */}
+      <div
+        className="pointer-events-none absolute top-28 inset-x-0 h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent"
+        aria-hidden="true"
+      />
+
+      {/* Corner Architectural Labels */}
+      <div
+        className="pointer-events-none absolute inset-x-8 top-8 hidden justify-between text-[10px] font-mono tracking-widest text-blue-400/60 sm:flex lg:inset-x-16"
+        aria-hidden="true"
+      >
+        <span className="flex items-center gap-1.5">
+          <span className="text-blue-500/80">+</span> Enterprise Systems
+        </span>
+        <span className="flex items-center gap-1.5">
+          Consulting Framework <span className="text-blue-500/80">+</span>
+        </span>
+      </div>
+
+      {/* MAIN CONTENT AREA */}
+      <Container className="relative z-10 px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-3xl text-center">
+          {/* PREMIUM ENTERPRISE SIGNAL LINE */}
+          <div className="relative mx-auto flex max-w-2xl items-center justify-center gap-4">
+            {/* Left Expanding Signal Line */}
+            <motion.div
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              className="h-px flex-1 origin-right bg-gradient-to-r from-transparent via-blue-300/60 to-blue-600/80"
+              aria-hidden="true"
+            />
+
+            {/* Badge Text */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.94 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <span className="inline-flex items-center gap-2 rounded-full border border-blue-200/80 bg-blue-50/80 px-4 py-1.5 text-[0.6875rem] font-bold uppercase tracking-[0.22em] text-blue-700 shadow-xs backdrop-blur-xs">
+                <span className="size-1.5 rounded-full bg-blue-600 animate-pulse" />
+                PROFESSIONAL TECHNOLOGY ASSISTANCE
               </span>
             </motion.div>
 
-            <motion.h2
-              id="technology-assistance-heading"
-              custom={0.08}
-              variants={reveal}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-60px" }}
-              className="mx-auto mt-5 max-w-4xl font-heading text-[clamp(2rem,5vw,3.6rem)] font-semibold leading-[0.98] tracking-[-0.055em] text-blue-950"
-            >
-              Professional Technology Assistance
-            </motion.h2>
-
-            <motion.p
-              custom={0.16}
-              variants={reveal}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-60px" }}
-              className="mx-auto mt-4 max-w-2xl text-balance text-base leading-7 text-slate-700 sm:text-[1.03rem]"
-            >
-              Where Technology Meets Tailored Solutions and Innovation Drives
-              Success
-            </motion.p>
-
+            {/* Right Expanding Signal Line */}
             <motion.div
-              custom={0.24}
-              variants={reveal}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-60px" }}
-              className="mt-8"
-            >
-              <Link
-                href={ROUTES.contact}
-                aria-label="Contact Us for IT Consulting"
-                className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full border border-blue-200/80 bg-white px-5 py-3 text-sm font-semibold text-blue-800 shadow-[0_12px_30px_rgba(15,23,42,0.06)] transition-all duration-300 hover:-translate-y-0.5 hover:border-blue-300 hover:shadow-[0_18px_42px_rgba(37,99,235,0.14)]"
-              >
-                <span className="absolute inset-0 bg-[linear-gradient(120deg,transparent_10%,rgba(59,130,246,0.12)_45%,transparent_80%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                <span
-                  className="absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 transition-transform duration-500 group-hover:scale-x-100"
-                  style={{
-                    backgroundImage:
-                      "linear-gradient(90deg,rgba(59,130,246,0),rgba(59,130,246,1),rgba(125,211,252,1),rgba(59,130,246,0))",
-                  }}
-                />
-                <span className="relative">IT Consulting</span>
-                <span className="relative flex size-7 items-center justify-center rounded-full bg-blue-50 text-primary transition-transform duration-300 group-hover:translate-x-0.5">
-                  <ArrowRight className="size-4" />
-                </span>
-              </Link>
-            </motion.div>
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              className="h-px flex-1 origin-left bg-gradient-to-r from-blue-600/80 via-blue-300/60 to-transparent"
+              aria-hidden="true"
+            />
           </div>
 
-          <motion.div
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true, margin: "-40px" }}
-            transition={{ duration: 0.7, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="mx-auto mt-12 h-px max-w-4xl origin-left"
-            style={{
-              backgroundImage:
-                "linear-gradient(90deg,rgba(0,0,0,0),rgba(125,211,252,0.7),rgba(0,0,0,0))",
-            }}
-            aria-hidden
-          />
-
-          <motion.div
-            aria-hidden
-            initial={{ opacity: 0, y: 18 }}
+          {/* MAIN HEADING */}
+          <motion.h2
+            id="technology-assistance-heading"
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.7, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
-            className="pointer-events-none mx-auto mt-8 max-w-5xl"
+            viewport={{ once: true }}
+            transition={{ duration: 0.55, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-6 font-heading text-3xl font-medium tracking-tight text-slate-900 sm:text-4xl lg:text-5xl"
           >
-            <div className="h-10 rounded-[1.5rem] bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.12),transparent_70%)] [clip-path:polygon(0_55%,14%_36%,32%_48%,50%_64%,68%_49%,86%_35%,100%_56%,100%_100%,0_100%)]" />
+            Professional{" "}
+            <motion.span
+              initial={{ opacity: 0.7 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.6 }}
+              className="font-bold text-blue-600"
+            >
+              Technology
+            </motion.span>{" "}
+            Assistance
+          </motion.h2>
+
+          {/* SUPPORTING STATEMENT */}
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className="mx-auto mt-4 max-w-xl text-balance text-base font-normal leading-relaxed text-slate-600 sm:text-lg"
+          >
+            Where Technology Meets Tailored Solutions and Innovation Drives
+            Success
+          </motion.p>
+
+          {/* CTA INTERACTION AREA */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.85, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-8 flex flex-col items-center justify-center"
+          >
+            <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
+              Need expert technology guidance?
+            </p>
+            <Link
+              href={`${ROUTES.contact}#contact-section`}
+              aria-label="IT Consulting Contact"
+              className="group relative inline-flex items-center gap-2.5 rounded-full bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-md shadow-blue-600/15 transition-all duration-300 hover:-translate-y-0.5 hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-600/25 active:translate-y-0"
+            >
+              <span>IT Consulting</span>
+              <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </Link>
           </motion.div>
-        </Container>
+        </div>
+      </Container>
+
+      {/* BOTTOM TRANSITION: Modern Curved Architectural Divider */}
+      <div className="relative mt-12 w-full overflow-hidden leading-none sm:mt-16">
+        <motion.svg
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, delay: 1.0 }}
+          className="relative block h-10 w-full text-slate-50/90 sm:h-14 lg:h-16"
+          viewBox="0 0 1200 120"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+        >
+          <path
+            d="M0,0 C300,85 900,85 1200,0 L1200,120 L0,120 Z"
+            fill="currentColor"
+          />
+          <motion.path
+            initial={{ pathLength: 0 }}
+            whileInView={{ pathLength: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.2, delay: 1.0, ease: "easeInOut" }}
+            d="M0,0 C300,85 900,85 1200,0"
+            fill="none"
+            stroke="url(#enterpriseCurveGradient)"
+            strokeWidth="1.5"
+          />
+          <defs>
+            <linearGradient
+              id="enterpriseCurveGradient"
+              x1="0%"
+              y1="0%"
+              x2="100%"
+              y2="0%"
+            >
+              <stop offset="0%" stopColor="rgba(59,130,246,0)" />
+              <stop offset="50%" stopColor="rgba(59,130,246,0.35)" />
+              <stop offset="100%" stopColor="rgba(59,130,246,0)" />
+            </linearGradient>
+          </defs>
+        </motion.svg>
       </div>
     </section>
   );

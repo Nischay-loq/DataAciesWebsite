@@ -1,36 +1,44 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
-import { motion } from "motion/react";
-import {
-  ArrowRight,
-  BadgeCheck,
-  Check,
-  Handshake,
-  Layers,
-  Lightbulb,
-  ShieldCheck,
-  SlidersHorizontal,
-  Sparkles,
-  Telescope,
-  type LucideIcon,
-} from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import { useState, useEffect, useCallback } from "react";
+import { ArrowRight, BadgeCheck, Sparkles } from "lucide-react";
 import { ROUTES } from "@/constants/routes";
 import { Container } from "@/components/layout/container";
 import { CompanyIntroductionSection } from "@/components/sections/company-introduction-section";
 
+/* ──────────────────────────────────────────────────────────────
+   Image mapping — each file in public/home_images/ matched
+   strictly by heading name (no shuffling, no reuse).
+
+   ✅  "comprehensive service portfolio.png" → Comprehensive Service Portfolio
+   ✅  "tailored solutions.png"              → Tailored Solutions
+   ✅  "client relationships.png"            → Client Relationships
+   ✅  "focus oninnovation.png"              → Focus on Innovation
+   ✅  "commitmenttoqualityandsecurity.png"  → Commitment to Quality and Security
+   ✅  "envisionthefuture.png"               → Envision the Future
+────────────────────────────────────────────────────────────── */
+
 type Reason = {
   title: string;
-  icon: LucideIcon;
+  /** One-line teaser shown in the list row */
+  teaser: string;
   points: string[];
   accent: "blue" | "navy";
+  /** Path relative to /public — served as static asset */
+  imageSrc: string;
+  imageAlt: string;
 };
 
 const reasons: Reason[] = [
   {
     title: "Comprehensive Service Portfolio",
-    icon: Layers,
+    teaser: "End-to-end services across data, infrastructure & talent",
     accent: "blue",
+    imageSrc: "/home_images/comprehensive service portfolio.png",
+    imageAlt: "A broad range of enterprise services offered by Data Acies",
     points: [
       "Comprehensive suite of services addressing diverse business needs",
       "Expertise in data management, IT infrastructure optimization, digital transformation, business process streamlining, and talent acquisition",
@@ -40,8 +48,10 @@ const reasons: Reason[] = [
   },
   {
     title: "Tailored Solutions",
-    icon: SlidersHorizontal,
+    teaser: "Custom-fit strategies aligned to your unique goals",
     accent: "blue",
+    imageSrc: "/home_images/tailored solutions.png",
+    imageAlt: "Customized solutions crafted for each client's unique challenges",
     points: [
       "Recognition of the uniqueness of each client and their specific goals and challenges",
       "Customized solutions tailored to meet clients' individual needs",
@@ -51,8 +61,10 @@ const reasons: Reason[] = [
   },
   {
     title: "Client Relationships",
-    icon: Handshake,
+    teaser: "Long-term partnerships built on trust and open communication",
     accent: "blue",
+    imageSrc: "/home_images/client relationships.png",
+    imageAlt: "Strong, long-lasting partnerships built on trust and communication",
     points: [
       "Emphasis on building strong and long-lasting partnerships",
       "Foster open communication and actively listen to client needs",
@@ -63,8 +75,10 @@ const reasons: Reason[] = [
   },
   {
     title: "Focus on Innovation",
-    icon: Lightbulb,
+    teaser: "Staying ahead with emerging tech and cutting-edge practices",
     accent: "navy",
+    imageSrc: "/home_images/focus oninnovation.png",
+    imageAlt: "Driving innovation through emerging technologies and cutting-edge practices",
     points: [
       "Continuous focus on staying ahead of industry trends and emerging technologies",
       "Embracing innovation to provide cutting-edge solutions to clients",
@@ -75,8 +89,10 @@ const reasons: Reason[] = [
   },
   {
     title: "Commitment to Quality and Security",
-    icon: ShieldCheck,
+    teaser: "High standards, rigorous QA, and robust data protection",
     accent: "navy",
+    imageSrc: "/home_images/commitmenttoqualityandsecurity.png",
+    imageAlt: "Uncompromising quality standards and robust security protocols",
     points: [
       "Commitment to maintaining high quality standards in all our services",
       "Adherence to industry best practices for optimal results",
@@ -87,8 +103,10 @@ const reasons: Reason[] = [
   },
   {
     title: "Envision the Future",
-    icon: Telescope,
+    teaser: "A long-term, technology-driven vision for global growth",
     accent: "navy",
+    imageSrc: "/home_images/envisionthefuture.png",
+    imageAlt: "A forward-looking vision powered by the latest technologies",
     points: [
       "We envision the future systemically, with a long-term view and the latest technologies",
       "We consistently keep track of emerging technologies to deliver advanced software solutions",
@@ -97,115 +115,76 @@ const reasons: Reason[] = [
   },
 ];
 
-const iconGradients = {
-  blue: "from-blue-500 to-blue-700",
-  navy: "from-blue-700 to-[#1E3A8A]",
+/* ──────────────────────────────────────────────────────────────
+   Design tokens
+────────────────────────────────────────────────────────────── */
+const accentLineClass = {
+  blue: "bg-[#2563EB]",
+  navy: "bg-[#1E3A8A]",
+} as const;
+
+const topBorderGradient = {
+  blue: "from-[#2563EB] to-blue-400",
+  navy: "from-[#1E3A8A] to-blue-600",
+} as const;
+
+/** Duration each slide is shown before auto-advancing (ms) */
+const AUTO_ADVANCE_MS = 5500;
+
+/* ──────────────────────────────────────────────────────────────
+   Bullet stagger variants
+────────────────────────────────────────────────────────────── */
+const bulletListVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.07, delayChildren: 0.12 },
+  },
 };
 
-const cardBorderGradients = {
-  blue: "from-blue-400 to-blue-600",
-  navy: "from-blue-600 to-[#1E3A8A]",
+const bulletItemVariants = {
+  hidden: { opacity: 0, x: -12 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.38, ease: [0.22, 1, 0.36, 1] as const },
+  },
 };
 
-const cardBg = {
-  blue: "from-white to-[#F8FAFF]",
-  navy: "from-white to-[#F0F5FF]",
-};
-
-function ReasonCard({
-  reason,
-  index,
-}: {
-  reason: Reason;
-  index: number;
-}) {
-  const Icon = reason.icon;
-
-  return (
-    <motion.article
-      key={reason.title}
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{
-        duration: 0.55,
-        delay: index * 0.1,
-        ease: [0.22, 1, 0.36, 1],
-      }}
-      whileHover={{ y: -6 }}
-      className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-gradient-to-b p-8 shadow-md transition-shadow duration-300 hover:shadow-[0_20px_48px_rgba(37,99,235,0.18)]"
-      style={{
-        backgroundImage: `linear-gradient(to bottom, white, ${reason.accent === "blue" ? "#F8FAFF" : "#F0F5FF"})`,
-      }}
-    >
-      {/* Animated Top Gradient Border — expands from center */}
-      <motion.div
-        initial={{ scaleX: 0 }}
-        whileInView={{ scaleX: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.7, delay: 0.2 + index * 0.1, ease: [0.22, 1, 0.36, 1] }}
-        className={`absolute inset-x-0 top-0 h-[3px] origin-center rounded-t-2xl bg-gradient-to-r ${cardBorderGradients[reason.accent]} transition-all duration-300 group-hover:h-[4px]`}
-        aria-hidden="true"
-      />
-
-      {/* Subtle Inner Radial Glow */}
-      <div
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(37,99,235,0.06),transparent_50%)]"
-        aria-hidden="true"
-      />
-
-      {/* Icon Container — Bold gradient bg + glow + hover scale/rotate */}
-      <motion.div
-        whileHover={{ scale: 1.1, rotate: 6 }}
-        transition={{ type: "spring", stiffness: 300, damping: 18 }}
-        className={`relative inline-flex size-16 items-center justify-center rounded-2xl bg-gradient-to-br ${iconGradients[reason.accent]} text-white shadow-[0_8px_20px_rgba(37,99,235,0.35)]`}
-      >
-        {/* Shimmer sweep on hover */}
-        <span
-          className="absolute inset-0 rounded-2xl bg-[linear-gradient(105deg,transparent_30%,rgba(255,255,255,0.25)_50%,transparent_70%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-          aria-hidden="true"
-        />
-        <Icon className="relative size-8" strokeWidth={1.8} />
-      </motion.div>
-
-      {/* Card Content */}
-      <div className="relative mt-6 flex flex-1 flex-col">
-        <h3 className="font-heading text-2xl font-bold tracking-tight text-slate-900">
-          {reason.title}
-        </h3>
-
-        <ul className="mt-5 flex flex-1 flex-col justify-start space-y-4">
-          {reason.points.map((point, pointIndex) => (
-            <motion.li
-              key={point}
-              initial={{ opacity: 0, x: -8 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{
-                duration: 0.4,
-                delay: 0.3 + index * 0.1 + pointIndex * 0.05,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-              className="flex items-start gap-3"
-            >
-              {/* Filled Blue Circular Badge Checkmark */}
-              <span className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-blue-600 text-white shadow-sm">
-                <Check className="size-3.5" strokeWidth={2.8} />
-              </span>
-              <span className="text-[0.95rem] leading-relaxed text-slate-600">
-                {point}
-              </span>
-            </motion.li>
-          ))}
-        </ul>
-      </div>
-    </motion.article>
-  );
-}
-
+/* ──────────────────────────────────────────────────────────────
+   WhyChooseUsSection — Showcase layout
+────────────────────────────────────────────────────────────── */
 export function WhyChooseUsSection() {
-  const row1 = reasons.slice(0, 3);
-  const row2 = reasons.slice(3, 6);
+  /**
+   * Single shared state: which item is currently showcased.
+   * On mobile this same index drives the accordion open/closed state.
+   */
+  const [activeIndex, setActiveIndex] = useState(0);
+  /**
+   * Once the user clicks a row manually, auto-advance is paused
+   * permanently for the session so it doesn't fight the user.
+   */
+  const [isPaused, setIsPaused] = useState(false);
+
+  const handleSelect = useCallback((index: number) => {
+    setActiveIndex(index);
+    setIsPaused(true);
+  }, []);
+
+  /**
+   * Auto-advance interval.
+   * `activeIndex` is in the dep array so the interval — and
+   * therefore the progress bar animation — resets cleanly each
+   * time the slide changes (whether via auto-advance or manual click).
+   */
+  useEffect(() => {
+    if (isPaused) return;
+    const id = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % reasons.length);
+    }, AUTO_ADVANCE_MS);
+    return () => clearInterval(id);
+  }, [isPaused, activeIndex]);
+
+  const active = reasons[activeIndex];
 
   return (
     <section
@@ -213,7 +192,7 @@ export function WhyChooseUsSection() {
       aria-labelledby="why-choose-us-heading"
       className="relative overflow-hidden bg-[linear-gradient(180deg,rgba(244,248,255,0.9)_0%,#ffffff_38%,rgba(248,250,252,1)_100%)] pt-0 pb-20 sm:pb-24 lg:pb-28"
     >
-      {/* Thin Wave SVG Transition from previous section — replaces the tall blank gradient band */}
+      {/* Thin wave SVG transition from previous section */}
       <div className="relative w-full overflow-hidden leading-none" aria-hidden="true">
         <svg
           viewBox="0 0 1440 80"
@@ -228,7 +207,7 @@ export function WhyChooseUsSection() {
         </svg>
       </div>
 
-      {/* Background Ambiance Orb — subtle top radial, no tall gap */}
+      {/* Background ambiance orbs */}
       <div
         className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-[radial-gradient(ellipse_at_50%_0%,rgba(59,130,246,0.08),transparent_70%)]"
         aria-hidden
@@ -247,7 +226,7 @@ export function WhyChooseUsSection() {
       />
 
       <Container size="wide" className="relative">
-        {/* Section Header */}
+        {/* ── Section Header ─────────────────────────────── */}
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -255,8 +234,8 @@ export function WhyChooseUsSection() {
           transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
           className="mx-auto max-w-3xl text-center"
         >
-          {/* Eyebrow Badge — gradient border + pulsing dot */}
-          <div className="mx-auto inline-flex items-center gap-2.5 rounded-full border border-transparent bg-white/80 px-4 py-1.5 text-[0.6875rem] font-semibold uppercase tracking-[0.18em] text-primary shadow-[0_8px_20px_rgba(15,23,42,0.04)] ring-1 ring-blue-300/60 ring-offset-0">
+          {/* Eyebrow badge */}
+          <div className="mx-auto inline-flex items-center gap-2.5 rounded-full border border-transparent bg-white/80 px-4 py-1.5 text-[0.6875rem] font-semibold uppercase tracking-[0.18em] text-primary shadow-[0_8px_20px_rgba(15,23,42,0.04)] ring-1 ring-blue-300/60">
             <Sparkles className="size-3.5 text-blue-500" aria-hidden />
             <span>Why Choose Us</span>
             <motion.span
@@ -274,7 +253,7 @@ export function WhyChooseUsSection() {
             Why Is It Worth <span className="text-primary">Choosing Us</span>
           </h2>
 
-          {/* Animated Gradient Divider — expands width on scroll into view */}
+          {/* Animated gradient divider */}
           <motion.div
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
@@ -284,7 +263,6 @@ export function WhyChooseUsSection() {
             aria-hidden
           />
 
-          {/* Animated Subtext — fade-up with delay */}
           <motion.p
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -296,7 +274,7 @@ export function WhyChooseUsSection() {
             client-first mindset to create lasting value for every partnership.
           </motion.p>
 
-          {/* Stat Chips — social proof pills */}
+          {/* Stat chips — social proof pills */}
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -321,24 +299,273 @@ export function WhyChooseUsSection() {
           </motion.div>
         </motion.div>
 
-        {/* Row 1 — Blue accent cards */}
-        <div className="mt-14 grid auto-rows-fr gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {row1.map((reason, index) => (
-            <ReasonCard key={reason.title} reason={reason} index={index} />
-          ))}
-        </div>
+        {/* ════════════════════════════════════════════════════
+            SHOWCASE LAYOUT
+            Desktop (lg+): panel left 55% | list right 45%
+            Mobile: panel on top, list accordion below
+        ════════════════════════════════════════════════════ */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-14 flex flex-col gap-6 lg:flex-row lg:items-stretch lg:gap-8"
+        >
 
-        {/* Row 2 — Navy accent cards (visually distinguished) */}
-        <div className="mt-6 grid auto-rows-fr gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {row2.map((reason, index) => (
-            <ReasonCard key={reason.title} reason={reason} index={index + 3} />
-          ))}
-        </div>
+          {/* ── LEFT / TOP: Showcase Panel ─────────────────── */}
+          <div
+            className="relative flex w-full flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-[0_20px_60px_rgba(37,99,235,0.10)] lg:w-[55%] lg:shrink-0"
+          >
+            {/* Animated top gradient border — resets with key on each switch */}
+            <motion.div
+              key={`border-${activeIndex}`}
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] as const }}
+              className={`absolute inset-x-0 top-0 z-20 h-[3px] origin-left rounded-t-2xl bg-gradient-to-r ${topBorderGradient[active.accent]}`}
+              aria-hidden="true"
+            />
 
-        {/* Conveyor Belt Feature Cards placed right above Satisfaction Guaranteed card */}
+            {/* ── Image area (fixed height) ── */}
+            <div className="relative h-[260px] shrink-0 overflow-hidden sm:h-[320px] lg:h-[360px]">
+              {/*
+                mode="sync" → entering and exiting images overlap,
+                producing a smooth cross-fade rather than a flash-to-blank.
+              */}
+              <AnimatePresence mode="sync">
+                <motion.div
+                  key={`img-${activeIndex}`}
+                  className="absolute inset-0"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.65, ease: "easeInOut" }}
+                >
+                  <Image
+                    src={active.imageSrc}
+                    alt={active.imageAlt}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 55vw"
+                    className="object-cover brightness-95"
+                    priority
+                  />
+
+                  {/* Bottom gradient — improves readability of any overlaid text */}
+                  <div
+                    className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/35 to-transparent"
+                    aria-hidden="true"
+                  />
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Counter badge (top-left) */}
+              <div
+                className="absolute left-4 top-4 z-10 flex items-center gap-1.5 rounded-full bg-black/30 px-3 py-1 backdrop-blur-sm"
+                aria-hidden="true"
+              >
+                <span className="text-[0.7rem] font-semibold tabular-nums text-white">
+                  {String(activeIndex + 1).padStart(2, "0")}
+                </span>
+                <span className="text-[0.7rem] text-white/50">/</span>
+                <span className="text-[0.7rem] font-semibold text-white/60">
+                  {String(reasons.length).padStart(2, "0")}
+                </span>
+              </div>
+
+              {/* Dot nav (bottom-center) */}
+              <div
+                className="absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 items-center gap-1.5"
+                aria-hidden="true"
+              >
+                {reasons.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => handleSelect(i)}
+                    className={[
+                      "rounded-full transition-all duration-300 focus-visible:outline-none",
+                      i === activeIndex
+                        ? "h-2 w-5 bg-white"
+                        : "size-2 bg-white/40 hover:bg-white/70",
+                    ].join(" ")}
+                    aria-label={`Show ${reasons[i].title}`}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* ── Content area (fixed min-height, no reflow) ── */}
+            <div className="relative flex min-h-[220px] flex-1 flex-col overflow-hidden px-7 pb-8 pt-6 sm:px-8 sm:pt-7">
+              {/* Subtle radial inner glow */}
+              <div
+                className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(37,99,235,0.05),transparent_60%)]"
+                aria-hidden="true"
+              />
+
+              {/*
+                mode="wait" → old content fully exits before new enters,
+                preventing visual overlap inside the fixed-height box.
+              */}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={`content-${activeIndex}`}
+                  initial={{ opacity: 0, y: 14 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] as const }}
+                  className="relative"
+                >
+                  {/* Accent line above heading */}
+                  <span
+                    className={`mb-3 block h-[3px] w-8 rounded-full ${accentLineClass[active.accent]}`}
+                    aria-hidden="true"
+                  />
+
+                  <h3 className="font-heading text-2xl font-bold tracking-tight text-slate-900 sm:text-[1.65rem]">
+                    {active.title}
+                  </h3>
+
+                  {/* Staggered bullet list */}
+                  <motion.ul
+                    variants={bulletListVariants}
+                    initial="hidden"
+                    animate="visible"
+                    className="mt-4 flex flex-col space-y-2.5"
+                  >
+                    {active.points.map((point) => (
+                      <motion.li
+                        key={point}
+                        variants={bulletItemVariants}
+                        className="flex items-start gap-2.5"
+                      >
+                        {/* Filled blue circular badge checkmark */}
+                        <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-[#2563EB] text-white shadow-sm">
+                          <svg
+                            className="size-3"
+                            viewBox="0 0 14 14"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2.8"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            aria-hidden="true"
+                          >
+                            <polyline points="2,7 5.5,10.5 12,3" />
+                          </svg>
+                        </span>
+                        <span className="text-sm leading-relaxed text-slate-600 sm:text-[0.925rem]">
+                          {point}
+                        </span>
+                      </motion.li>
+                    ))}
+                  </motion.ul>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </div>
+
+          {/* ── RIGHT / BOTTOM: Compact list ───────────────── */}
+          <div className="flex w-full flex-col gap-1.5 lg:w-[45%]">
+            {reasons.map((reason, index) => {
+              const isActive = index === activeIndex;
+
+              return (
+                <button
+                  key={reason.title}
+                  onClick={() => handleSelect(index)}
+                  aria-pressed={isActive}
+                  aria-label={`View ${reason.title}`}
+                  className={[
+                    "group relative flex w-full items-center gap-4 overflow-hidden rounded-xl px-5 py-4 text-left transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-1",
+                    isActive
+                      ? "border-l-[3px] border-blue-600 bg-blue-50/80 shadow-sm"
+                      : "border-l-[3px] border-transparent hover:bg-slate-50/90",
+                  ].join(" ")}
+                >
+                  {/* Thumbnail */}
+                  <div className="relative size-[4.5rem] shrink-0 overflow-hidden rounded-xl">
+                    <Image
+                      src={reason.imageSrc}
+                      alt=""
+                      fill
+                      sizes="72px"
+                      className={[
+                        "object-cover transition-all duration-500",
+                        isActive
+                          ? "brightness-100 saturate-110"
+                          : "brightness-[0.65] grayscale-[25%] group-hover:brightness-90 group-hover:grayscale-0",
+                      ].join(" ")}
+                      aria-hidden="true"
+                    />
+                  </div>
+
+                  {/* Text */}
+                  <div className="min-w-0 flex-1">
+                    <p
+                      className={[
+                        "truncate text-base font-semibold leading-snug transition-colors duration-150",
+                        isActive ? "text-blue-700" : "text-slate-800 group-hover:text-slate-900",
+                      ].join(" ")}
+                    >
+                      {reason.title}
+                    </p>
+                    <p
+                      className={[
+                        "mt-1 line-clamp-1 text-sm leading-relaxed transition-colors duration-150",
+                        isActive ? "text-blue-600/80" : "text-slate-500",
+                      ].join(" ")}
+                    >
+                      {reason.teaser}
+                    </p>
+                  </div>
+
+                  {/*
+                    Shared layout-animated dot — slides between rows
+                    giving a physical "selection" feel.
+                  */}
+                  {isActive && (
+                    <motion.span
+                      layoutId="active-indicator-dot"
+                      className="size-2 shrink-0 rounded-full bg-blue-500"
+                      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] as const }}
+                      aria-hidden="true"
+                    />
+                  )}
+
+                  {/*
+                    Progress bar — auto-advance timer indicator.
+                    key forces a fresh animation on every index change.
+                    Only rendered while auto-advance is live.
+                  */}
+                  {isActive && !isPaused && (
+                    <motion.div
+                      key={`progress-${activeIndex}`}
+                      className="absolute inset-x-0 bottom-0 h-[2px] origin-left rounded-b-xl bg-blue-500"
+                      initial={{ scaleX: 0 }}
+                      animate={{ scaleX: 1 }}
+                      transition={{
+                        duration: AUTO_ADVANCE_MS / 1000,
+                        ease: "linear",
+                      }}
+                      aria-hidden="true"
+                    />
+                  )}
+                </button>
+              );
+            })}
+
+            {/* Auto-advance status hint */}
+            <p className="mt-1 px-4 text-[0.7rem] text-slate-400" aria-live="polite">
+              {isPaused
+                ? "Auto-advance paused — click any item to explore"
+                : "Auto-advancing · click any item to take control"}
+            </p>
+          </div>
+        </motion.div>
+
+        {/* Conveyor belt feature cards */}
         <CompanyIntroductionSection />
 
-        {/* Satisfaction Guaranteed — highlight banner */}
+        {/* ── Satisfaction Guaranteed banner ──────────────── */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -379,7 +606,7 @@ export function WhyChooseUsSection() {
           </div>
         </motion.div>
 
-        {/* Ready to Transform Your Business — closing CTA */}
+        {/* ── Ready to Transform CTA ────────────────────────── */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

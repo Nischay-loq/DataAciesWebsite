@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
 import { Menu, X } from "lucide-react";
 import { Container } from "@/components/layout/container";
 import { ROUTES } from "@/constants/routes";
@@ -53,8 +53,42 @@ function normalizePath(href: string) {
 export function SiteHeader() {
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("");
+
+  const { scrollY } = useScroll();
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const previous = scrollY.getPrevious() ?? 0;
+    const diff = latest - previous;
+
+    // Track scroll threshold for compact state (~50px)
+    setIsScrolled(latest > 50);
+
+    // Keep header visible if mobile navigation drawer is open
+    if (isDrawerOpen) {
+      setIsVisible(true);
+      return;
+    }
+
+    // Always show header near the top of the page (< 50px)
+    if (latest < 50) {
+      setIsVisible(true);
+    } else if (diff > 6) {
+      // Hide header when scrolling down
+      setIsVisible(false);
+    } else if (diff < -6) {
+      // Show header smoothly when scrolling up
+      setIsVisible(true);
+    }
+  });
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setIsScrolled(window.scrollY > 50);
+    }
+  }, []);
 
   const activeItem = useMemo(() => {
     if (activeSection) {
@@ -71,13 +105,6 @@ export function SiteHeader() {
 
     return pathMatch?.label ?? "Home";
   }, [activeSection, pathname]);
-
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 12);
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   useEffect(() => {
     if (isDrawerOpen) {
@@ -119,31 +146,39 @@ export function SiteHeader() {
 
   const linkClassName = (label: string) =>
     cn(
-      "group relative inline-flex h-10 items-center rounded-full px-1 font-sans text-sm font-bold text-slate-100 transition-colors duration-300",
+      "group relative inline-flex items-center rounded-full px-1 font-sans font-bold text-slate-100 transition-colors duration-300",
+      isScrolled ? "h-9 text-xs sm:text-sm" : "h-10 text-sm",
       "hover:text-blue-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900",
       activeItem === label && "text-blue-400",
     );
 
   return (
     <motion.header
-      initial={{ opacity: 0, y: -12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-      className="sticky top-0 z-50 px-3 py-3 sm:px-4"
+      initial={false}
+      animate={{
+        y: isVisible ? "0%" : "-100%",
+        opacity: isVisible ? 1 : 0,
+      }}
+      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+      className={cn(
+        "sticky top-0 z-50 px-3 transition-all duration-300 sm:px-4",
+        isScrolled ? "py-2 sm:py-2.5" : "py-3 sm:py-4",
+      )}
     >
       <Container size="wide" className="px-0">
         <div
           className={cn(
-            "grid h-18 grid-cols-[auto_1fr_auto] items-center gap-3 rounded-full border px-4 shadow-[0_16px_45px_rgba(15,23,42,0.25)] transition-all duration-300 sm:h-20 sm:px-5",
-            "border-slate-800/80 bg-slate-900/95 backdrop-blur-xl",
-            isScrolled &&
-              "border-blue-500/30 bg-slate-950/98 shadow-[0_20px_60px_rgba(15,23,42,0.35)] backdrop-blur-2xl",
+            "grid items-center gap-3 rounded-full border px-4 transition-all duration-300 sm:px-5",
+            "grid-cols-[auto_1fr_auto]",
+            isScrolled
+              ? "h-14 border-slate-700/60 bg-slate-900/80 shadow-sm backdrop-blur-md sm:h-16"
+              : "h-18 border-slate-800/80 bg-slate-900/95 shadow-[0_16px_45px_rgba(15,23,42,0.25)] backdrop-blur-xl sm:h-20",
           )}
         >
           <Link
             href={ROUTES.home}
             aria-label="Data Acies home"
-            className="group inline-flex min-w-0 items-center rounded-full bg-white/95 px-3 py-1.5 shadow-sm transition-transform duration-300 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/40"
+            className="group inline-flex min-w-0 items-center rounded-full bg-white/95 px-3 py-1.5 shadow-sm transition-all duration-300 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/40"
           >
             <Image
               src={logo.src}
@@ -152,7 +187,10 @@ export function SiteHeader() {
               height={logo.height}
               priority
               sizes="(max-width: 767px) 162px, (max-width: 1023px) 180px, 216px"
-              className="h-8 w-auto rounded-xs object-contain sm:h-9 lg:h-10"
+              className={cn(
+                "w-auto rounded-xs object-contain transition-all duration-300",
+                isScrolled ? "h-7 sm:h-8 lg:h-9" : "h-8 sm:h-9 lg:h-10",
+              )}
             />
           </Link>
 
@@ -179,8 +217,9 @@ export function SiteHeader() {
             <Link
               href={`${ROUTES.contact}#contact-section`}
               className={cn(
-                "hidden h-11 items-center rounded-full bg-linear-to-r from-[#2563EB] via-[#1D4ED8] to-[#0EA5E9] px-5 font-sans text-sm font-bold text-white shadow-[0_12px_34px_rgba(37,99,235,0.35)] transition-all duration-300",
+                "hidden items-center rounded-full bg-linear-to-r from-[#2563EB] via-[#1D4ED8] to-[#0EA5E9] px-5 font-sans font-bold text-white shadow-[0_12px_34px_rgba(37,99,235,0.35)] transition-all duration-300",
                 "hover:-translate-y-0.5 hover:shadow-[0_16px_44px_rgba(37,99,235,0.45)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/40 lg:inline-flex",
+                isScrolled ? "h-9.5 text-xs sm:text-sm" : "h-11 text-sm",
               )}
             >
               Book a Consultation
@@ -192,7 +231,10 @@ export function SiteHeader() {
               aria-expanded={isDrawerOpen}
               aria-controls="mobile-navigation"
               onClick={() => setIsDrawerOpen((open) => !open)}
-              className="inline-flex size-11 items-center justify-center rounded-full border border-slate-700 bg-slate-800/80 text-slate-100 shadow-sm transition hover:border-blue-400 hover:text-blue-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/40 lg:hidden"
+              className={cn(
+                "inline-flex items-center justify-center rounded-full border border-slate-700 bg-slate-800/80 text-slate-100 shadow-sm transition hover:border-blue-400 hover:text-blue-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/40 lg:hidden",
+                isScrolled ? "size-9.5" : "size-11",
+              )}
             >
               {isDrawerOpen ? <X className="size-5" /> : <Menu className="size-5" />}
             </button>
@@ -219,7 +261,10 @@ export function SiteHeader() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 28 }}
               transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-              className="fixed right-4 top-23 z-50 w-[min(22rem,calc(100vw-2rem))] overflow-hidden rounded-[1.75rem] border border-slate-800 bg-slate-900/98 p-3 shadow-[0_24px_80px_rgba(0,0,0,0.4)] backdrop-blur-2xl lg:hidden"
+              className={cn(
+                "fixed right-4 z-50 w-[min(22rem,calc(100vw-2rem))] overflow-hidden rounded-[1.75rem] border border-slate-800 bg-slate-900/98 p-3 shadow-[0_24px_80px_rgba(0,0,0,0.4)] backdrop-blur-2xl lg:hidden",
+                isScrolled ? "top-18" : "top-22 sm:top-24",
+              )}
             >
               <nav className="flex flex-col gap-1" aria-label="Mobile navigation">
                 {navItems.map((item) => (

@@ -29,7 +29,6 @@ import {
   LayoutDashboard,
   Lightbulb,
   Lock,
-  LockKeyhole,
   Map,
   Package,
   PenTool,
@@ -404,7 +403,7 @@ const services: Service[] = [
   },
 ];
 
-/* Sidebar feature cards — global across all detail panels */
+/* Feature cards for the main Services section hero tile */
 const supportCards = [
   {
     title: "Smarter Insights",
@@ -419,9 +418,10 @@ const supportCards = [
   {
     title: "Future Ready",
     description: "Build a resilient, scalable data ecosystem.",
-    icon: LockKeyhole,
+    icon: ShieldCheck,
   },
 ] as const;
+
 
 /* ─────────────────────────────────────────────────────────────
    Helpers
@@ -701,63 +701,15 @@ function ServiceDetailPanel({
         {/* Separator */}
         <div className="mx-8 h-px bg-slate-100 sm:mx-10" />
 
-        {/* ── Detail layout: sticky sidebar + sub-service grid ── */}
-        <div className="flex flex-col gap-6 p-8 sm:p-10 lg:flex-row lg:items-start lg:gap-8">
-
-          {/* Sticky navy sidebar — pinned while grid scrolls on desktop */}
-          <div className="w-full lg:w-[240px] xl:w-[260px] lg:shrink-0 lg:sticky lg:top-8 lg:self-start">
-            <div className="relative overflow-hidden rounded-[1.4rem] bg-[linear-gradient(160deg,#2463eb_0%,#0f1f4d_100%)] p-5 text-white shadow-[0_16px_44px_rgba(37,99,235,0.26)]">
-              {/* Ambient glow */}
-              <div
-                className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_100%,rgba(125,211,252,0.18),transparent_52%)]"
-                aria-hidden
-              />
-
-              <div className="relative">
-                {/* Service icon circle */}
-                <div className="flex size-12 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur-sm ring-1 ring-white/20">
-                  <ServiceIcon className="size-6" />
-                </div>
-
-                <h3 className="mt-6 font-heading text-[1.35rem] font-semibold leading-[1.18] tracking-[-0.03em]">
-                  Turn Data into Decisions.<br />Drive Impact.
-                </h3>
-                <div className="mt-3 h-px w-7 bg-white/60" aria-hidden />
-
-                {/* 3 feature bullets — improved icon circle contrast */}
-                <div className="mt-5 space-y-4">
-                  {supportCards.map((item) => {
-                    const Icon = item.icon;
-                    return (
-                      <div key={item.title} className="flex items-start gap-3">
-                        {/* White icon circle with subtle inner glow + border */}
-                        <div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-white text-[#2463eb] shadow-[0_4px_14px_rgba(15,23,42,0.15),inset_0_1px_1px_rgba(255,255,255,0.9)] ring-1 ring-white/80">
-                          <Icon className="size-4" />
-                        </div>
-                        <div>
-                          <p className="text-[0.9375rem] font-bold leading-tight text-white">
-                            {item.title}
-                          </p>
-                          <p className="mt-0.5 text-[0.8125rem] leading-snug text-white/78">
-                            {item.description}
-                          </p>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-
-                {/* Decorative bottom fade */}
-                <div
-                  className="mt-6 h-10 rounded-[1.1rem] bg-[linear-gradient(180deg,rgba(255,255,255,0)_0%,rgba(255,255,255,0.06)_100%)]"
-                  aria-hidden
-                />
-              </div>
-            </div>
+        {/* ── Sub-service grid ── */}
+        <div className="p-8 sm:p-10">
+          <div className="mb-6 flex items-center gap-2.5">
+            <span className="size-2 rounded-full bg-[#2563EB]" />
+            <h3 className="font-heading text-xl font-bold tracking-tight text-[#0F1F4D]">
+              {service.subServicesLabel}
+            </h3>
           </div>
-
-          {/* Sub-service cards grid */}
-          <div className="flex-1 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {service.subServices.map((sub, i) => (
               <SubServiceCard key={sub.title} sub={sub} index={i} />
             ))}

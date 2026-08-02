@@ -381,6 +381,7 @@ export function WhyChooseUsSection() {
                   <button
                     key={i}
                     onClick={() => handleSelect(i)}
+                    suppressHydrationWarning
                     className={[
                       "rounded-full transition-all duration-300 focus-visible:outline-none",
                       i === activeIndex
@@ -474,6 +475,7 @@ export function WhyChooseUsSection() {
                   onClick={() => handleSelect(index)}
                   aria-pressed={isActive}
                   aria-label={`View ${reason.title}`}
+                  suppressHydrationWarning
                   className={[
                     "group relative flex w-full items-center gap-4 overflow-hidden rounded-xl px-5 py-4 text-left transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-1",
                     isActive

@@ -6,7 +6,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
 import { Menu, X } from "lucide-react";
-import { Container } from "@/components/layout/container";
 import { ROUTES } from "@/constants/routes";
 import { cn } from "@/lib/utils";
 
@@ -20,16 +19,8 @@ type HeaderNavItem = {
 const navItems: HeaderNavItem[] = [
   { label: "Home", href: ROUTES.home, matchPaths: [ROUTES.home] },
   { label: "About", href: ROUTES.about, matchPaths: [ROUTES.about] },
-  {
-    label: "Products",
-    href: ROUTES.products,
-    matchPaths: [ROUTES.products],
-  },
-  {
-    label: "What We Solve",
-    href: ROUTES.whatWeSolve,
-    matchPaths: [ROUTES.whatWeSolve],
-  },
+  { label: "Products", href: ROUTES.products, matchPaths: [ROUTES.products] },
+  { label: "What We Solve", href: ROUTES.whatWeSolve, matchPaths: [ROUTES.whatWeSolve] },
   { label: "Services", href: ROUTES.services, matchPaths: [ROUTES.services] },
   {
     label: "Contact",
@@ -63,22 +54,22 @@ export function SiteHeader() {
     const previous = scrollY.getPrevious() ?? 0;
     const diff = latest - previous;
 
-    // Track scroll threshold for compact state (~50px)
-    setIsScrolled(latest > 50);
+    // Track scroll state for compact height (> 80px)
+    setIsScrolled(latest > 80);
 
-    // Keep header visible if mobile navigation drawer is open
+    // Always keep header visible if mobile drawer is open
     if (isDrawerOpen) {
       setIsVisible(true);
       return;
     }
 
-    // Always show header near the top of the page (< 50px)
-    if (latest < 50) {
+    // Always visible near top of page (< 80px)
+    if (latest < 80) {
       setIsVisible(true);
-    } else if (diff > 6) {
-      // Hide header when scrolling down
+    } else if (diff > 8) {
+      // Hide header smoothly when scrolling down past 80px
       setIsVisible(false);
-    } else if (diff < -6) {
+    } else if (diff < -8) {
       // Show header smoothly when scrolling up
       setIsVisible(true);
     }
@@ -86,7 +77,7 @@ export function SiteHeader() {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      setIsScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > 80);
     }
   }, []);
 
@@ -146,10 +137,11 @@ export function SiteHeader() {
 
   const linkClassName = (label: string) =>
     cn(
-      "group relative inline-flex items-center rounded-full px-1 font-sans font-bold text-slate-100 transition-colors duration-300",
-      isScrolled ? "h-9 text-xs sm:text-sm" : "h-10 text-sm",
-      "hover:text-blue-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900",
-      activeItem === label && "text-blue-400",
+      "group relative inline-flex items-center px-1 font-sans text-sm transition-colors duration-200",
+      activeItem === label
+        ? "text-blue-600 font-bold"
+        : "text-slate-700 hover:text-blue-600 font-semibold",
+      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600/40 focus-visible:ring-offset-2",
     );
 
   return (
@@ -157,28 +149,27 @@ export function SiteHeader() {
       initial={false}
       animate={{
         y: isVisible ? "0%" : "-100%",
-        opacity: isVisible ? 1 : 0,
       }}
-      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
       className={cn(
-        "sticky top-0 z-50 px-3 transition-all duration-300 sm:px-4",
-        isScrolled ? "py-2 sm:py-2.5" : "py-3 sm:py-4",
+        "sticky top-0 z-50 w-full border-b transition-all duration-300",
+        isScrolled
+          ? "border-slate-200/90 bg-white/95 shadow-sm backdrop-blur-md"
+          : "border-slate-200/60 bg-white/90 backdrop-blur-md",
       )}
     >
-      <Container size="wide" className="px-0">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div
           className={cn(
-            "grid items-center gap-3 rounded-full border px-4 transition-all duration-300 sm:px-5",
-            "grid-cols-[auto_1fr_auto]",
-            isScrolled
-              ? "h-14 border-slate-700/60 bg-slate-900/80 shadow-sm backdrop-blur-md sm:h-16"
-              : "h-18 border-slate-800/80 bg-slate-900/95 shadow-[0_16px_45px_rgba(15,23,42,0.25)] backdrop-blur-xl sm:h-20",
+            "flex items-center justify-between transition-all duration-300",
+            isScrolled ? "h-16" : "h-20",
           )}
         >
+          {/* Logo */}
           <Link
             href={ROUTES.home}
             aria-label="Data Acies home"
-            className="group inline-flex min-w-0 items-center rounded-full bg-white/95 px-3 py-1.5 shadow-sm transition-all duration-300 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/40"
+            className="group flex items-center rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600/40 focus-visible:ring-offset-2"
           >
             <Image
               src={logo.src}
@@ -186,24 +177,25 @@ export function SiteHeader() {
               width={logo.width}
               height={logo.height}
               priority
-              sizes="(max-width: 767px) 162px, (max-width: 1023px) 180px, 216px"
+              sizes="(max-width: 767px) 150px, (max-width: 1023px) 170px, 200px"
               className={cn(
-                "w-auto rounded-xs object-contain transition-all duration-300",
-                isScrolled ? "h-7 sm:h-8 lg:h-9" : "h-8 sm:h-9 lg:h-10",
+                "w-auto object-contain transition-all duration-300",
+                isScrolled ? "h-8 sm:h-9" : "h-9 sm:h-10",
               )}
             />
           </Link>
 
+          {/* Desktop Navigation */}
           <nav
             aria-label="Main navigation"
-            className="hidden justify-self-center lg:flex lg:items-center lg:gap-6 xl:gap-8"
+            className="hidden items-center gap-7 lg:flex xl:gap-9"
           >
             {navItems.map((item) => (
               <Link key={item.label} href={item.href} className={linkClassName(item.label)}>
                 {item.label}
                 <span
                   className={cn(
-                    "absolute inset-x-1 -bottom-0.5 h-0.5 origin-center scale-x-0 rounded-full bg-blue-400 transition-transform duration-300",
+                    "absolute inset-x-0 -bottom-1 h-0.5 origin-left scale-x-0 rounded-full bg-blue-600 transition-transform duration-300 ease-out",
                     "group-hover:scale-x-100",
                     activeItem === item.label && "scale-x-100",
                   )}
@@ -213,12 +205,14 @@ export function SiteHeader() {
             ))}
           </nav>
 
-          <div className="flex items-center justify-end gap-2">
+          {/* CTA & Mobile Toggle */}
+          <div className="flex items-center gap-3">
             <Link
               href={`${ROUTES.contact}#contact-section`}
               className={cn(
-                "hidden items-center rounded-full bg-linear-to-r from-[#2563EB] via-[#1D4ED8] to-[#0EA5E9] px-5 font-sans font-bold text-white shadow-[0_12px_34px_rgba(37,99,235,0.35)] transition-all duration-300",
-                "hover:-translate-y-0.5 hover:shadow-[0_16px_44px_rgba(37,99,235,0.45)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/40 lg:inline-flex",
+                "hidden items-center justify-center rounded-full bg-blue-600 px-5 font-sans font-bold text-white shadow-sm transition-all duration-200",
+                "hover:bg-blue-700 hover:shadow-md hover:shadow-blue-500/20 active:scale-[0.98]",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600/40 focus-visible:ring-offset-2 lg:inline-flex",
                 isScrolled ? "h-9.5 text-xs sm:text-sm" : "h-11 text-sm",
               )}
             >
@@ -232,16 +226,17 @@ export function SiteHeader() {
               aria-controls="mobile-navigation"
               onClick={() => setIsDrawerOpen((open) => !open)}
               className={cn(
-                "inline-flex items-center justify-center rounded-full border border-slate-700 bg-slate-800/80 text-slate-100 shadow-sm transition hover:border-blue-400 hover:text-blue-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/40 lg:hidden",
-                isScrolled ? "size-9.5" : "size-11",
+                "inline-flex items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-700 shadow-sm transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600/40 lg:hidden",
+                isScrolled ? "size-9.5" : "size-10.5",
               )}
             >
               {isDrawerOpen ? <X className="size-5" /> : <Menu className="size-5" />}
             </button>
           </div>
         </div>
-      </Container>
+      </div>
 
+      {/* Mobile Navigation Drawer */}
       <AnimatePresence>
         {isDrawerOpen && (
           <>
@@ -253,46 +248,47 @@ export function SiteHeader() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
               onClick={() => setIsDrawerOpen(false)}
-              className="fixed inset-0 z-40 bg-slate-950/40 backdrop-blur-sm lg:hidden"
+              className="fixed inset-0 z-40 bg-slate-950/30 backdrop-blur-sm lg:hidden"
             />
             <motion.div
               id="mobile-navigation"
-              initial={{ opacity: 0, x: 28 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 28 }}
-              transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
               className={cn(
-                "fixed right-4 z-50 w-[min(22rem,calc(100vw-2rem))] overflow-hidden rounded-[1.75rem] border border-slate-800 bg-slate-900/98 p-3 shadow-[0_24px_80px_rgba(0,0,0,0.4)] backdrop-blur-2xl lg:hidden",
-                isScrolled ? "top-18" : "top-22 sm:top-24",
+                "absolute inset-x-0 top-full z-50 border-b border-slate-200 bg-white/98 p-4 shadow-xl backdrop-blur-xl lg:hidden",
               )}
             >
-              <nav className="flex flex-col gap-1" aria-label="Mobile navigation">
-                {navItems.map((item) => (
-                  <Link
-                    key={item.label}
-                    href={item.href}
-                    onClick={() => setIsDrawerOpen(false)}
-                    className={cn(
-                      "flex items-center justify-between rounded-2xl px-4 py-3 font-sans text-sm font-bold text-slate-100 transition-colors",
-                      "hover:bg-slate-800/80 hover:text-blue-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/35",
-                      activeItem === item.label && "bg-blue-500/20 text-blue-400",
-                    )}
-                  >
-                    {item.label}
-                    {activeItem === item.label && (
-                      <span className="size-1.5 rounded-full bg-blue-400" aria-hidden />
-                    )}
-                  </Link>
-                ))}
-              </nav>
+              <div className="mx-auto max-w-7xl">
+                <nav className="flex flex-col space-y-1" aria-label="Mobile navigation">
+                  {navItems.map((item) => (
+                    <Link
+                      key={item.label}
+                      href={item.href}
+                      onClick={() => setIsDrawerOpen(false)}
+                      className={cn(
+                        "flex items-center justify-between rounded-xl px-4 py-3 font-sans text-sm font-semibold text-slate-800 transition-colors",
+                        "hover:bg-blue-50/80 hover:text-blue-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600/35",
+                        activeItem === item.label && "bg-blue-50 text-blue-600 font-bold",
+                      )}
+                    >
+                      {item.label}
+                      {activeItem === item.label && (
+                        <span className="size-1.5 rounded-full bg-blue-600" aria-hidden />
+                      )}
+                    </Link>
+                  ))}
+                </nav>
 
-              <Link
-                href={`${ROUTES.contact}#contact-section`}
-                onClick={() => setIsDrawerOpen(false)}
-                className="mt-3 flex h-12 items-center justify-center rounded-full bg-linear-to-r from-[#2563EB] via-[#1D4ED8] to-[#0EA5E9] px-5 font-sans text-sm font-bold text-white shadow-[0_14px_36px_rgba(37,99,235,0.32)] transition hover:-translate-y-0.5"
-              >
-                Book a Consultation
-              </Link>
+                <Link
+                  href={`${ROUTES.contact}#contact-section`}
+                  onClick={() => setIsDrawerOpen(false)}
+                  className="mt-4 flex h-11 items-center justify-center rounded-full bg-blue-600 px-5 font-sans text-sm font-bold text-white shadow-sm transition hover:bg-blue-700"
+                >
+                  Book a Consultation
+                </Link>
+              </div>
             </motion.div>
           </>
         )}

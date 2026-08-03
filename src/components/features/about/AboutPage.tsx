@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import Link from "next/link";
 import { motion } from "motion/react";
 import {
@@ -20,6 +21,7 @@ import {
 import { ROUTES } from "@/constants/routes";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
+import { GlobalPresenceMap } from "./GlobalPresenceMap";
 
 const timeline = [
   {
@@ -71,21 +73,37 @@ const values = [
     title: "Trust",
     description: "Building lasting relationships through transparency, reliability, and accountability.",
     icon: ShieldCheck,
+    accent: "#2563EB",       // blue-600
+    accentBg: "#EFF6FF",    // blue-50
+    accentShadow: "rgba(37,99,235,0.28)",
+    accentBorder: "rgba(37,99,235,0.25)",
   },
   {
     title: "Care",
     description: "Putting people first and ensuring client success at every stage of engagement.",
     icon: Users,
+    accent: "#0EA5E9",       // sky-500
+    accentBg: "#F0F9FF",
+    accentShadow: "rgba(14,165,233,0.28)",
+    accentBorder: "rgba(14,165,233,0.25)",
   },
   {
     title: "Innovation",
     description: "Continuously exploring new technologies and approaches to create business value.",
     icon: Lightbulb,
+    accent: "#4F46E5",       // indigo-600
+    accentBg: "#EEF2FF",
+    accentShadow: "rgba(79,70,229,0.28)",
+    accentBorder: "rgba(79,70,229,0.25)",
   },
   {
     title: "Customer First",
     description: "Every decision starts with understanding customer needs and delivering meaningful outcomes.",
     icon: CheckCircle2,
+    accent: "#0891B2",       // cyan-600
+    accentBg: "#ECFEFF",
+    accentShadow: "rgba(8,145,178,0.28)",
+    accentBorder: "rgba(8,145,178,0.25)",
   },
 ] as const;
 
@@ -422,295 +440,273 @@ export function AboutPage() {
       {/* ──────────────────────────────────────────────────────────────
           SECTION 3 — Global Presence (Interactive Stylized Map)
       ────────────────────────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden bg-white py-28 lg:py-32 border-b border-slate-200/80">
-        {/* Subtle radial background wash */}
+      <GlobalPresenceMap />
+
+
+      {/* ─────────────────────────────────────────────────────────────────
+          SECTION — Our Mission & Our Vision
+      ───────────────────────────────────────────────────────────────── */}
+      <section className="relative overflow-hidden bg-slate-50 py-24 sm:py-28 border-b border-slate-200/70">
+        {/* Soft background gradient wash */}
         <div
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_40%,#EFF4FF_0%,rgba(255,255,255,0)_70%)]"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_30%_60%,rgba(219,234,254,0.4),transparent_60%)]"
+          aria-hidden="true"
+        />
+        <div className="relative mx-auto grid max-w-6xl gap-7 px-container-x lg:grid-cols-2">
+
+          {/* ── OUR MISSION (light blue tint) ── */}
+          <motion.article
+            initial={{ opacity: 0, y: 32 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.6, delay: 0, ease: [0.22, 1, 0.36, 1] }}
+            className="group relative overflow-hidden rounded-[2rem] border border-blue-200/70 bg-gradient-to-br from-blue-50 via-white to-blue-50/30 p-8 shadow-[0_8px_32px_rgba(37,99,235,0.09)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_16px_48px_rgba(37,99,235,0.14)] sm:p-10"
+          >
+            {/* Watermark icon — Target (Mission) */}
+            <div className="pointer-events-none absolute -right-6 -top-6 opacity-[0.06] text-blue-600" aria-hidden="true">
+              <Target className="size-52" strokeWidth={0.8} />
+            </div>
+
+            {/* Top accent bar */}
+            <div className="absolute inset-x-0 top-0 h-1 rounded-t-[2rem] bg-gradient-to-r from-blue-400 via-blue-600 to-blue-400 opacity-70" />
+
+            {/* Icon badge */}
+            <div
+              className="relative flex size-14 items-center justify-center rounded-2xl shadow-[0_4px_18px_rgba(37,99,235,0.30)]"
+              style={{ background: "linear-gradient(135deg,#2563EB,#1D4ED8)" }}
+            >
+              <Target className="size-7 text-white" aria-hidden />
+            </div>
+
+            <h2 className="relative mt-8 font-heading text-3xl font-bold tracking-[-0.03em] text-slate-950">
+              Our Mission
+            </h2>
+            <p className="relative mt-5 text-lg leading-relaxed text-slate-600">
+              By assisting businesses in utilizing the most cutting-edge digital
+              transformation technologies, we help significantly improve
+              efficiency, accelerate innovation, and drive measurable business
+              outcomes.
+            </p>
+          </motion.article>
+
+          {/* ── OUR VISION (deep navy / dark card) ── */}
+          <motion.article
+            initial={{ opacity: 0, y: 32 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.6, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
+            className="group relative overflow-hidden rounded-[2rem] border border-blue-900/30 bg-gradient-to-br from-slate-900 via-slate-900 to-blue-950 p-8 shadow-[0_8px_40px_rgba(15,23,42,0.30)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_16px_56px_rgba(15,23,42,0.4)] sm:p-10"
+          >
+            {/* Subtle grid overlay */}
+            <div
+              className="pointer-events-none absolute inset-0 opacity-[0.06] [background-image:linear-gradient(to_right,white_1px,transparent_1px),linear-gradient(to_bottom,white_1px,transparent_1px)] [background-size:36px_36px]"
+              aria-hidden="true"
+            />
+            {/* Watermark icon — Compass (Vision) */}
+            <div className="pointer-events-none absolute -right-4 -top-4 opacity-[0.08] text-blue-300" aria-hidden="true">
+              <Compass className="size-52" strokeWidth={0.8} />
+            </div>
+            {/* Radial glow in corner */}
+            <div
+              className="pointer-events-none absolute -right-12 -top-12 size-56 rounded-full"
+              style={{ background: "radial-gradient(circle,rgba(59,130,246,0.18),transparent 70%)" }}
+              aria-hidden="true"
+            />
+
+            {/* Top accent bar */}
+            <div className="absolute inset-x-0 top-0 h-1 rounded-t-[2rem] bg-gradient-to-r from-blue-500 via-sky-400 to-blue-500 opacity-80" />
+
+            {/* Icon badge */}
+            <div
+              className="relative flex size-14 items-center justify-center rounded-2xl shadow-[0_4px_18px_rgba(96,165,250,0.35)]"
+              style={{ background: "linear-gradient(135deg,#3B82F6,#2563EB)" }}
+            >
+              <Compass className="size-7 text-white" aria-hidden />
+            </div>
+
+            <h2 className="relative mt-8 font-heading text-3xl font-bold tracking-[-0.03em] text-white">
+              Our Vision
+            </h2>
+            <p className="relative mt-5 text-lg leading-relaxed text-blue-100/80">
+              To become one of the world&apos;s leading business consulting and
+              technology transformation firms, delivering innovations that advance
+              how people live and work.
+            </p>
+          </motion.article>
+
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────────────────────────────────
+          SECTION — Core Values
+      ───────────────────────────────────────────────────────────────── */}
+      <section
+        aria-labelledby="core-values-heading"
+        className="relative overflow-hidden bg-white py-24 sm:py-28 border-b border-slate-200/70"
+      >
+        {/* Very soft radial wash */}
+        <div
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_60%_0%,rgba(219,234,254,0.28),transparent_60%)]"
           aria-hidden="true"
         />
 
         <div className="relative mx-auto max-w-6xl px-container-x">
-          <SectionHeader
-            eyebrow="Global Presence"
-            title="Strategic presence with global delivery capability"
-            description="Data Acies combines executive proximity in North America with high-capacity engineering centers across India."
-          />
 
-          {/* Map Card Canvas Container */}
-          <div className="relative mt-14 rounded-[2.5rem] border border-slate-200/80 bg-gradient-to-b from-[#F8FAFC] to-[#EFF4FF]/60 p-4 sm:p-8 shadow-[0_20px_50px_rgba(15,23,42,0.06)] overflow-hidden">
-            {/* World Grid Map Visual */}
-            <div className="relative aspect-[16/9] w-full min-h-[380px] sm:min-h-[460px] flex items-center justify-center">
-
-              {/* Background SVG Grid & Continents Line-Art */}
-              <svg
-                viewBox="0 0 1000 500"
-                className="absolute inset-0 h-full w-full select-none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <defs>
-                  {/* Subtle Grid Pattern */}
-                  <pattern id="map-grid" width="30" height="30" patternUnits="userSpaceOnUse">
-                    <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#CBD5E1" strokeWidth="0.5" strokeOpacity="0.4" />
-                  </pattern>
-
-                  {/* Flow Line Gradient */}
-                  <linearGradient id="arc-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="#2563EB" stopOpacity="0.9" />
-                    <stop offset="50%" stopColor="#60A5FA" stopOpacity="1" />
-                    <stop offset="100%" stopColor="#1D4ED8" stopOpacity="0.9" />
-                  </linearGradient>
-                </defs>
-
-                {/* Grid Overlay */}
-                <rect width="1000" height="500" fill="url(#map-grid)" />
-
-                {/* Stylized Continent Outlines (Line Art) */}
-                <g fill="#E2E8F0" stroke="#94A3B8" strokeWidth="0.75" opacity="0.55">
-                  {/* North America */}
-                  <path d="M 120,90 Q 200,70 300,100 T 320,200 Q 250,260 180,240 T 100,160 Z" />
-                  {/* South America */}
-                  <path d="M 270,270 Q 320,280 340,350 T 290,440 Q 250,420 250,340 Z" />
-                  {/* Europe */}
-                  <path d="M 460,80 Q 540,70 580,110 T 540,170 Q 480,160 450,120 Z" />
-                  {/* Africa */}
-                  <path d="M 460,180 Q 560,180 570,260 T 520,380 Q 460,360 450,260 Z" />
-                  {/* Asia / India */}
-                  <path d="M 590,90 Q 750,70 850,130 T 820,270 Q 720,290 620,220 Z" />
-                  <path d="M 700,190 Q 750,200 750,270 Q 710,280 690,220 Z" fill="#DBEAFE" stroke="#3B82F6" strokeWidth="1.2" opacity="0.85" />
-                  {/* Australia */}
-                  <path d="M 800,320 Q 880,310 900,360 T 840,420 Q 780,410 790,350 Z" />
-                </g>
-
-                {/* Animated Connector Arcs from Dallas (220, 185) to India (Mumbai, Hyderabad, Chennai) */}
-                {/* Glow Under-Arc */}
-                <path d="M 220 185 Q 465 85 710 235" fill="none" stroke="#93C5FD" strokeWidth="4" opacity="0.4" />
-                <path d="M 220 185 Q 480 75 740 220" fill="none" stroke="#93C5FD" strokeWidth="4" opacity="0.4" />
-                <path d="M 220 185 Q 485 95 748 252" fill="none" stroke="#93C5FD" strokeWidth="4" opacity="0.4" />
-
-                {/* Animated Flow Arcs */}
-                <motion.path
-                  d="M 220 185 Q 465 85 710 235"
-                  fill="none"
-                  stroke="url(#arc-gradient)"
-                  strokeWidth="2.5"
-                  strokeDasharray="8 8"
-                  animate={{ strokeDashoffset: [0, -32] }}
-                  transition={{ duration: 2.2, repeat: Infinity, ease: "linear" }}
+          {/* ── Section header with animated dot rhythm ── */}
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            className="mx-auto max-w-3xl text-center"
+          >
+            {/* Animated dot sequence eyebrow rhythm */}
+            <div className="mb-4 flex items-center justify-center gap-2" aria-hidden="true">
+              {[0, 0.15, 0.3, 0.45, 0.6, 0.75, 0.9].map((delay, i) => (
+                <motion.span
+                  key={i}
+                  className="block rounded-full bg-primary"
+                  style={{ width: i === 3 ? 20 : 6, height: 6, opacity: 0.3 + (i === 3 ? 0.7 : 0) }}
+                  animate={{ opacity: [0.25, 0.85, 0.25], scaleX: i === 3 ? [1, 1.15, 1] : 1 }}
+                  transition={{ duration: 2.2, delay, repeat: Infinity, ease: "easeInOut" }}
                 />
-                <motion.path
-                  d="M 220 185 Q 480 75 740 220"
-                  fill="none"
-                  stroke="url(#arc-gradient)"
-                  strokeWidth="2.5"
-                  strokeDasharray="8 8"
-                  animate={{ strokeDashoffset: [0, -32] }}
-                  transition={{ duration: 1.9, repeat: Infinity, ease: "linear" }}
-                />
-                <motion.path
-                  d="M 220 185 Q 485 95 748 252"
-                  fill="none"
-                  stroke="url(#arc-gradient)"
-                  strokeWidth="2.5"
-                  strokeDasharray="8 8"
-                  animate={{ strokeDashoffset: [0, -32] }}
-                  transition={{ duration: 2.4, repeat: Infinity, ease: "linear" }}
-                />
-              </svg>
-
-              {/* Location Pins Overlay */}
-
-              {/* 1. DALLAS (HEADQUARTERS) */}
-              <div className="absolute left-[22%] top-[37%] -translate-x-1/2 -translate-y-1/2 group z-20">
-                {/* Pulse Ring */}
-                <motion.div
-                  className="absolute -inset-3 rounded-full bg-blue-500/30"
-                  animate={{ scale: [1, 1.8, 1], opacity: [0.7, 0, 0.7] }}
-                  transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-                />
-
-                {/* Pin Badge Button */}
-                <div className="relative flex items-center gap-2 rounded-full bg-[linear-gradient(135deg,#0F1F4D_0%,#1D4ED8_100%)] px-3.5 py-2 text-white shadow-[0_8px_24px_rgba(15,31,77,0.35)] ring-2 ring-white transition-transform duration-300 group-hover:scale-110 cursor-pointer">
-                  <span className="flex size-6 items-center justify-center rounded-full bg-amber-400 text-[#0F1F4D]">
-                    <Building2 className="size-3.5 font-bold" />
-                  </span>
-                  <div className="text-left leading-none pr-1">
-                    <p className="text-[0.65rem] font-extrabold uppercase tracking-[0.16em] text-amber-300">
-                      Global HQ
-                    </p>
-                    <p className="text-xs font-bold text-white mt-0.5">
-                      Dallas, TX
-                    </p>
-                  </div>
-                </div>
-
-                {/* Tooltip on Hover */}
-                <div className="pointer-events-none absolute bottom-full left-1/2 mb-3 -translate-x-1/2 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:-translate-y-1 w-64 z-30">
-                  <div className="rounded-2xl border border-blue-400/30 bg-[#0F1F4D] p-4 text-white shadow-2xl backdrop-blur-md">
-                    <div className="flex items-center justify-between">
-                      <span className="rounded-full bg-amber-400/20 px-2.5 py-0.5 text-[0.65rem] font-bold uppercase tracking-wider text-amber-300">
-                        Headquarters
-                      </span>
-                      <span className="text-[0.7rem] text-slate-300">USA</span>
-                    </div>
-                    <h4 className="mt-2 font-heading text-sm font-bold text-white">Dallas, Texas</h4>
-                    <p className="mt-1 text-xs leading-relaxed text-slate-300">
-                      Global Operations, Executive Leadership & Client Strategy
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* 2. HYDERABAD (DELIVERY CENTER) */}
-              <div className="absolute left-[74%] top-[44%] -translate-x-1/2 -translate-y-1/2 group z-20">
-                <motion.div
-                  className="absolute -inset-2 rounded-full bg-blue-400/30"
-                  animate={{ scale: [1, 1.6, 1], opacity: [0.6, 0, 0.6] }}
-                  transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
-                />
-                <div className="relative flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-slate-900 shadow-md ring-2 ring-blue-500 transition-transform duration-300 group-hover:scale-110 cursor-pointer">
-                  <span className="size-2.5 rounded-full bg-[#2563EB]" />
-                  <span className="text-xs font-bold">Hyderabad</span>
-                </div>
-                {/* Tooltip */}
-                <div className="pointer-events-none absolute bottom-full left-1/2 mb-3 -translate-x-1/2 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:-translate-y-1 w-60 z-30">
-                  <div className="rounded-2xl border border-slate-200 bg-white p-3.5 text-slate-900 shadow-xl">
-                    <span className="rounded-full bg-blue-50 px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-wider text-primary">
-                      Delivery Center
-                    </span>
-                    <h4 className="mt-1.5 font-heading text-sm font-bold text-slate-900">Hyderabad, India</h4>
-                    <p className="mt-1 text-xs leading-relaxed text-slate-600">
-                      Cloud Engineering, AI R&D & Core Delivery Hub
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* 3. MUMBAI (DELIVERY CENTER) */}
-              <div className="absolute left-[71%] top-[47%] -translate-x-1/2 -translate-y-1/2 group z-20">
-                <motion.div
-                  className="absolute -inset-2 rounded-full bg-blue-400/30"
-                  animate={{ scale: [1, 1.6, 1], opacity: [0.6, 0, 0.6] }}
-                  transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
-                />
-                <div className="relative flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-slate-900 shadow-md ring-2 ring-blue-500 transition-transform duration-300 group-hover:scale-110 cursor-pointer">
-                  <span className="size-2.5 rounded-full bg-[#2563EB]" />
-                  <span className="text-xs font-bold">Mumbai</span>
-                </div>
-                {/* Tooltip */}
-                <div className="pointer-events-none absolute bottom-full left-1/2 mb-3 -translate-x-1/2 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:-translate-y-1 w-60 z-30">
-                  <div className="rounded-2xl border border-slate-200 bg-white p-3.5 text-slate-900 shadow-xl">
-                    <span className="rounded-full bg-blue-50 px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-wider text-primary">
-                      Delivery Center
-                    </span>
-                    <h4 className="mt-1.5 font-heading text-sm font-bold text-slate-900">Mumbai, India</h4>
-                    <p className="mt-1 text-xs leading-relaxed text-slate-600">
-                      Digital Operations & Enterprise Intelligent Workflows
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* 4. CHENNAI (DELIVERY CENTER) */}
-              <div className="absolute left-[75%] top-[51%] -translate-x-1/2 -translate-y-1/2 group z-20">
-                <motion.div
-                  className="absolute -inset-2 rounded-full bg-blue-400/30"
-                  animate={{ scale: [1, 1.6, 1], opacity: [0.6, 0, 0.6] }}
-                  transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.9 }}
-                />
-                <div className="relative flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-slate-900 shadow-md ring-2 ring-blue-500 transition-transform duration-300 group-hover:scale-110 cursor-pointer">
-                  <span className="size-2.5 rounded-full bg-[#2563EB]" />
-                  <span className="text-xs font-bold">Chennai</span>
-                </div>
-                {/* Tooltip */}
-                <div className="pointer-events-none absolute bottom-full left-1/2 mb-3 -translate-x-1/2 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:-translate-y-1 w-60 z-30">
-                  <div className="rounded-2xl border border-slate-200 bg-white p-3.5 text-slate-900 shadow-xl">
-                    <span className="rounded-full bg-blue-50 px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-wider text-primary">
-                      Delivery Center
-                    </span>
-                    <h4 className="mt-1.5 font-heading text-sm font-bold text-slate-900">Chennai, India</h4>
-                    <p className="mt-1 text-xs leading-relaxed text-slate-600">
-                      Software Assurance, Testing Automation & Quality Engineering
-                    </p>
-                  </div>
-                </div>
-              </div>
-
+              ))}
             </div>
+            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">
+              Core Values
+            </p>
+            <h2
+              id="core-values-heading"
+              className="mt-4 font-heading text-3xl font-semibold tracking-[-0.03em] text-slate-950 sm:text-4xl"
+            >
+              What We Stand For
+            </h2>
+          </motion.div>
 
-            {/* ── Legend Row below Map ── */}
-            <div className="mt-6 flex flex-wrap items-center justify-center gap-6 rounded-2xl border border-slate-200/80 bg-white px-6 py-3.5 shadow-sm text-xs font-semibold text-slate-700">
-              <div className="flex items-center gap-2">
-                <span className="flex size-3.5 items-center justify-center rounded-full bg-[#0F1F4D] text-amber-400 ring-2 ring-amber-400/50">
-                  ★
-                </span>
-                <span><strong className="text-slate-900">Headquarters:</strong> Dallas, Texas (USA)</span>
-              </div>
-              <div className="h-3 w-px bg-slate-200 hidden sm:block" />
-              <div className="flex items-center gap-2">
-                <span className="size-2.5 rounded-full bg-[#2563EB]" />
-                <span><strong className="text-slate-900">Delivery Centers:</strong> Hyderabad, Mumbai, Chennai (India)</span>
-              </div>
-              <div className="h-3 w-px bg-slate-200 hidden sm:block" />
-              <div className="flex items-center gap-2 text-slate-500">
-                <span className="h-0.5 w-5 bg-gradient-to-r from-blue-500 to-sky-400 rounded-full" />
-                <span>Active 24/7 Delivery Flow</span>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-slate-50 py-20 sm:py-24">
-        <div className="mx-auto grid max-w-6xl gap-6 px-container-x lg:grid-cols-2">
-          <Feature title="Our Mission" icon={Target}>
-            By assisting businesses in utilizing the most cutting-edge digital
-            transformation technologies, we help significantly improve
-            efficiency, accelerate innovation, and drive measurable business
-            outcomes.
-          </Feature>
-          <Feature title="Our Vision" icon={Compass}>
-            To become one of the world&apos;s leading business consulting and
-            technology transformation firms, delivering innovations that advance
-            how people live and work.
-          </Feature>
-        </div>
-      </section>
-
-      <section className="bg-white py-20 sm:py-24">
-        <div className="mx-auto max-w-6xl px-container-x">
-          <SectionHeader eyebrow="Core Values" title="What we stand for" />
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {values.map((value) => {
+          {/* ── Value cards grid ── */}
+          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {values.map((value, index) => {
               const Icon = value.icon;
               return (
-                <Card key={value.title}>
-                  <Icon className="size-7 text-primary" />
-                  <h3 className="mt-5 font-heading text-xl font-semibold text-slate-950">
+                <motion.article
+                  key={value.title}
+                  initial={{ opacity: 0, y: 28 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={{ duration: 0.5, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                  whileHover={{ y: -4 }}
+                  className="group relative overflow-hidden rounded-[1.75rem] border border-slate-200/80 bg-white p-6 shadow-[0_4px_20px_rgba(15,23,42,0.07)] transition-shadow duration-300"
+                  style={{
+                    "--accent": value.accent,
+                    "--accent-shadow": value.accentShadow,
+                  } as React.CSSProperties}
+                >
+                  {/* Left accent border */}
+                  <div
+                    className="absolute inset-y-0 left-0 w-1 rounded-l-[1.75rem] opacity-70 transition-opacity duration-300 group-hover:opacity-100"
+                    style={{ background: value.accent }}
+                  />
+                  {/* Hover accent glow bg */}
+                  <div
+                    className="pointer-events-none absolute inset-0 rounded-[1.75rem] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                    style={{ background: `radial-gradient(ellipse at 20% 20%, ${value.accentBg} 0%, transparent 70%)` }}
+                    aria-hidden="true"
+                  />
+
+                  {/* Icon badge */}
+                  <motion.div
+                    className="relative flex size-13 items-center justify-center rounded-2xl shadow-lg"
+                    style={{
+                      background: `linear-gradient(135deg, ${value.accent}ee, ${value.accent}bb)`,
+                      boxShadow: `0 6px 20px ${value.accentShadow}`,
+                    }}
+                    whileHover={{ scale: 1.08, rotate: 4 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 18 }}
+                  >
+                    <Icon className="size-7 text-white" aria-hidden />
+                  </motion.div>
+
+                  <h3
+                    className="relative mt-6 font-heading text-2xl font-bold tracking-[-0.02em] text-slate-900 transition-colors duration-200 group-hover:text-slate-950"
+                  >
                     {value.title}
                   </h3>
-                  <p className="mt-3 text-sm leading-6 text-slate-600">{value.description}</p>
-                </Card>
+                  <p className="relative mt-3 text-base leading-relaxed text-slate-600">
+                    {value.description}
+                  </p>
+                </motion.article>
               );
             })}
           </div>
         </div>
       </section>
 
-      <section className="bg-slate-50 py-20 sm:py-24">
-        <div className="mx-auto max-w-6xl px-container-x">
-          <SectionHeader eyebrow="Leadership Mindset" title="How we think" />
-          <div className="mt-12 grid gap-6 lg:grid-cols-3">
-            {mindset.map((item) => {
+      {/* ─────────────────────────────────────────────────────────────────
+          SECTION — Thought Leadership
+      ───────────────────────────────────────────────────────────────── */}
+      <section
+        aria-labelledby="thought-leadership-heading"
+        className="relative overflow-hidden bg-gradient-to-b from-slate-50 via-blue-50/40 to-white py-24 sm:py-28 border-b border-slate-200/70"
+      >
+        {/* Subtle radial wash */}
+        <div
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_30%,rgba(219,234,254,0.5),transparent_65%)]"
+          aria-hidden="true"
+        />
+        {/* Faint blue dot-grid pattern */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.06] [background-image:radial-gradient(circle_at_center,#2563eb_1px,transparent_1px)] [background-size:28px_28px]"
+          aria-hidden="true"
+        />
+
+        <div className="relative mx-auto max-w-6xl px-container-x">
+          {/* Section Heading — Single large heading 'Thought Leadership' */}
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            className="mx-auto max-w-3xl text-center"
+          >
+            <h2
+              id="thought-leadership-heading"
+              className="font-heading text-3xl font-bold tracking-[-0.03em] text-slate-950 sm:text-4xl lg:text-5xl"
+            >
+              Thought Leadership
+            </h2>
+          </motion.div>
+
+          {/* 3 Cards Grid */}
+          <div className="mt-14 grid gap-6 lg:grid-cols-3">
+            {mindset.map((item, index) => {
               const Icon = item.icon;
               return (
-                <Card key={item.title}>
-                  <Icon className="size-7 text-primary" />
-                  <h3 className="mt-5 font-heading text-xl font-semibold text-slate-950">
+                <motion.article
+                  key={item.title}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-60px" }}
+                  transition={{
+                    duration: 0.5,
+                    delay: index * 0.1,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                  whileHover={{ y: -4 }}
+                  className="group relative overflow-hidden rounded-[1.75rem] border border-blue-100 bg-gradient-to-br from-white via-blue-50/20 to-blue-50/50 p-8 shadow-md transition-all duration-300 ease-out hover:border-blue-300/80 hover:shadow-xl hover:shadow-blue-500/15"
+                >
+                  {/* Solid/gradient blue rounded-2xl icon badge */}
+                  <div className="flex size-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[#2563EB] to-[#1D4ED8] text-white shadow-md shadow-blue-500/20 transition-transform duration-300 ease-out group-hover:scale-[1.08]">
+                    <Icon className="size-7 stroke-[2.2]" aria-hidden="true" />
+                  </div>
+
+                  <h3 className="mt-6 font-heading text-2xl font-bold tracking-tight text-slate-900">
                     {item.title}
                   </h3>
-                  <p className="mt-3 text-sm leading-6 text-slate-600">{item.description}</p>
-                </Card>
+
+                  <p className="mt-3 text-base leading-relaxed text-slate-600">
+                    {item.description}
+                  </p>
+                </motion.article>
               );
             })}
           </div>

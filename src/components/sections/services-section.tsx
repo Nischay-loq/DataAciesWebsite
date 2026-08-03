@@ -424,12 +424,8 @@ const supportCards = [
 
 
 /* ─────────────────────────────────────────────────────────────
-   Helpers
+   Helpers & Constants
 ───────────────────────────────────────────────────────────── */
-/** Overview grid: odd index → deep-navy card */
-const isNavyCard = (index: number) => index % 2 !== 0;
-/** Sub-service grid: odd index → deep-navy card */
-const isNavySubCard = (index: number) => index % 2 !== 0;
 
 /* ─────────────────────────────────────────────────────────────
    DataIllustration — unchanged from Part 1
@@ -508,77 +504,60 @@ function DataIllustration() {
 /* ─────────────────────────────────────────────────────────────
    SubServiceCard
 ───────────────────────────────────────────────────────────── */
-function SubServiceCard({ sub, index }: { sub: SubService; index: number }) {
-  const navy = isNavySubCard(index);
+/* ─────────────────────────────────────────────────────────────
+   SubServiceCard
+───────────────────────────────────────────────────────────── */
+function SubServiceCard({
+  sub,
+  index,
+  total = 7,
+}: {
+  sub: SubService;
+  index: number;
+  total?: number;
+}) {
   const Icon = sub.icon;
-  const num = String(index + 1).padStart(2, "0");
+
+  // Center the 7th card in a 3-column grid when total count is 7
+  const isCenteredSeventh = total === 7 && index === 6;
 
   return (
     <motion.article
-      initial={{ opacity: 0, y: 16 }}
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-30px" }}
+      viewport={{ once: true, margin: "-40px" }}
       transition={{
-        duration: 0.42,
-        delay: (index % 4) * 0.06,
-        ease: [0.22, 1, 0.36, 1] as const,
+        duration: 0.45,
+        delay: index * 0.08,
+        ease: [0.22, 1, 0.36, 1],
       }}
+      whileHover={{ y: -4 }}
       className={[
-        "group relative flex flex-col overflow-hidden rounded-[1.25rem] p-5 transition-shadow duration-300",
-        navy
-          ? "border border-[#1E3A8A]/60 bg-[#0F1F4D] shadow-[0_10px_28px_rgba(15,31,77,0.22)] hover:shadow-[0_18px_40px_rgba(15,31,77,0.36)]"
-          : "border border-slate-200/70 bg-white shadow-[0_8px_22px_rgba(15,23,42,0.05)] hover:border-[#2f6bff]/30 hover:shadow-[0_16px_36px_rgba(37,99,235,0.11)]",
+        "group relative flex flex-col justify-between overflow-hidden rounded-[1.5rem] border border-slate-200 bg-gradient-to-br from-white via-blue-50/20 to-blue-50/50 p-6 shadow-md transition-all duration-300 ease-out hover:border-blue-300/80 hover:shadow-xl hover:shadow-blue-500/15",
+        isCenteredSeventh ? "lg:col-start-2" : "",
       ].join(" ")}
     >
-      {/* Ghost numeral watermark */}
-      <span
-        className={[
-          "pointer-events-none absolute -right-1 -top-3 select-none font-heading text-[3.5rem] font-bold leading-none tracking-[-0.06em]",
-          navy ? "text-white/[0.10]" : "text-[#0F1F4D]/[0.09]",
-        ].join(" ")}
-        aria-hidden="true"
-      >
-        {num}
-      </span>
+      <div className="flex flex-col space-y-4">
+        {/* Refined larger icon badge */}
+        <div className="flex size-14 shrink-0 items-center justify-center rounded-2xl border border-blue-200/60 bg-gradient-to-br from-blue-50 to-blue-100/90 text-blue-600 shadow-sm transition-transform duration-300 ease-out group-hover:scale-[1.08]">
+          <Icon className="size-7 stroke-[2.2]" aria-hidden="true" />
+        </div>
 
-      {/* Icon — gradient circle, hover scale + rotate */}
-      <div
-        className={[
-          "flex size-12 items-center justify-center rounded-full transition-all duration-300 group-hover:scale-110 group-hover:rotate-[5deg]",
-          navy
-            ? "bg-white/[0.12] text-[#7BB3FF] shadow-[0_0_18px_rgba(59,130,246,0.18)] ring-1 ring-white/10"
-            : "bg-gradient-to-br from-blue-50 to-blue-100/80 text-[#1D4ED8] shadow-[0_6px_18px_rgba(37,99,235,0.12)] ring-1 ring-blue-200/50",
-        ].join(" ")}
-      >
-        <Icon className="size-[1.375rem]" />
+        {/* Title + animated full-width expanding underline accent */}
+        <div className="relative pt-1">
+          <h4 className="font-heading text-xl font-bold tracking-tight text-slate-900">
+            {sub.title}
+          </h4>
+          <div className="relative mt-2.5 h-[3px] w-full overflow-hidden rounded-full bg-slate-100">
+            <span className="absolute inset-y-0 left-0 w-7 rounded-full bg-blue-600 transition-all duration-300 ease-out group-hover:w-full" />
+          </div>
+        </div>
+
+        {/* Full description text without truncation */}
+        <p className="text-base leading-relaxed text-slate-600">
+          {sub.description}
+        </p>
       </div>
-
-      {/* Title + expanding underline accent */}
-      <h4
-        className={[
-          "relative mt-5 pb-2 font-heading text-[1.05rem] font-bold leading-[1.2] tracking-[-0.02em]",
-          navy ? "text-white" : "text-[#0F1F4D]",
-        ].join(" ")}
-      >
-        {sub.title}
-        <span
-          className={[
-            "absolute bottom-0 left-0 block h-[2.5px] rounded-full transition-all duration-300 ease-out group-hover:w-10",
-            navy ? "w-5 bg-[#3B82F6]" : "w-5 bg-[#2563EB]",
-          ].join(" ")}
-          aria-hidden="true"
-        />
-      </h4>
-
-      {/* Description — max 3 lines */}
-      <p
-        className={[
-          "mt-3 line-clamp-3 text-[0.875rem] leading-[1.5]",
-          navy ? "text-white/70" : "text-slate-500",
-        ].join(" ")}
-      >
-        {sub.description}
-      </p>
     </motion.article>
   );
 }
@@ -701,17 +680,22 @@ function ServiceDetailPanel({
         {/* Separator */}
         <div className="mx-8 h-px bg-slate-100 sm:mx-10" />
 
-        {/* ── Sub-service grid ── */}
+        {/* ── Sub-service 3-column grid ── */}
         <div className="p-8 sm:p-10">
           <div className="mb-6 flex items-center gap-2.5">
-            <span className="size-2 rounded-full bg-[#2563EB]" />
-            <h3 className="font-heading text-xl font-bold tracking-tight text-[#0F1F4D]">
+            <span className="size-2.5 rounded-full bg-[#2563EB]" />
+            <h3 className="font-heading text-2xl font-bold tracking-tight text-[#0F1F4D]">
               {service.subServicesLabel}
             </h3>
           </div>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {service.subServices.map((sub, i) => (
-              <SubServiceCard key={sub.title} sub={sub} index={i} />
+              <SubServiceCard
+                key={sub.title}
+                sub={sub}
+                index={i}
+                total={service.subServices.length}
+              />
             ))}
           </div>
         </div>
@@ -857,114 +841,68 @@ export function ServicesSection() {
             </div>
           </motion.article>
 
-          {/* 5 service cards — alternating white/navy, layoutId accent morph */}
+          {/* 5 service cards — unified light card style */}
           {services.map((service, index) => {
             const isActive = activeService?.slug === service.slug;
             const hasDifferentActive = activeService !== null && !isActive;
-            const navy = isNavyCard(index);
             const Icon = service.icon;
-            const num = String(index + 1).padStart(2, "0");
 
             return (
               <motion.button
                 key={service.slug}
                 type="button"
                 onClick={() => handleSelect(service)}
-                initial={{ opacity: 0, y: 18 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{
                   duration: 0.5,
-                  delay: index * 0.06,
+                  delay: index * 0.08,
                   ease: [0.22, 1, 0.36, 1],
                 }}
-                whileHover={!isActive ? { y: -6 } : {}}
+                whileHover={!isActive ? { y: -4 } : {}}
                 aria-label={`${isActive ? "Collapse" : "Expand"} ${service.title}`}
                 aria-expanded={isActive}
                 className={[
-                  "group relative flex flex-col overflow-hidden rounded-[1.45rem] p-6 text-left transition-[shadow,opacity] duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2463eb]/40 focus-visible:ring-offset-2",
+                  "group relative flex flex-col justify-between overflow-hidden rounded-[1.5rem] border p-6 text-left transition-all duration-300 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2463eb]/40 focus-visible:ring-offset-2",
                   hasDifferentActive ? "opacity-60" : "opacity-100",
                   isActive
-                    ? navy
-                      ? "border-2 border-[#3B82F6]/60 bg-[#0F1F4D] shadow-[0_22px_52px_rgba(15,31,77,0.42)]"
-                      : "border-2 border-[#2563EB]/60 bg-white shadow-[0_22px_52px_rgba(37,99,235,0.18)]"
-                    : navy
-                      ? "border border-[#1E3A8A]/60 bg-[#0F1F4D] shadow-[0_12px_32px_rgba(15,31,77,0.28)] hover:shadow-[0_22px_48px_rgba(15,31,77,0.40)]"
-                      : "border border-slate-200/80 bg-white shadow-[0_10px_28px_rgba(15,23,42,0.05)] hover:border-[#2f6bff]/40 hover:shadow-[0_20px_44px_rgba(37,99,235,0.14)]",
+                    ? "border-2 border-[#2563EB] bg-gradient-to-br from-white via-blue-50/40 to-blue-100/60 shadow-xl shadow-blue-500/15"
+                    : "border-slate-200 bg-gradient-to-br from-white via-blue-50/20 to-blue-50/50 shadow-md hover:border-blue-300 hover:shadow-xl hover:shadow-blue-500/15",
                 ].join(" ")}
               >
-                {/*
-                  layoutId accent bar — present ONLY when NOT active.
-                  When active, this unmounts and the panel's layoutId bar takes
-                  over, creating the thin-bar → full-width-header morph.
-                */}
                 {!isActive && (
                   <motion.div
                     layoutId={`accent-${service.slug}`}
-                    className="absolute inset-x-0 top-0 h-[3px] rounded-t-[1.45rem] bg-gradient-to-r from-[#2563EB] to-[#1D4ED8]"
+                    className="absolute inset-x-0 top-0 h-[3px] rounded-t-[1.5rem] bg-gradient-to-r from-[#2563EB] to-[#1D4ED8]"
                     transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] as const }}
                   />
                 )}
 
-                {/* Ghost numeral watermark */}
-                <span
-                  className={[
-                    "pointer-events-none absolute -right-2 -top-3 select-none font-heading text-[4rem] font-bold leading-none tracking-[-0.06em] sm:text-[3.5rem]",
-                    navy ? "text-white/[0.12]" : "text-[#0F1F4D]/[0.10]",
-                  ].join(" ")}
-                  aria-hidden="true"
-                >
-                  {num}
-                </span>
+                <div className="flex flex-col space-y-4">
+                  {/* Refined larger icon badge */}
+                  <div className="flex size-14 shrink-0 items-center justify-center rounded-2xl border border-blue-200/60 bg-gradient-to-br from-blue-50 to-blue-100/90 text-blue-600 shadow-sm transition-transform duration-300 ease-out group-hover:scale-[1.08]">
+                    <Icon className="size-7 stroke-[2.2]" />
+                  </div>
 
-                {/* Icon circle */}
-                <div
-                  className={[
-                    "flex size-13 items-center justify-center rounded-full transition-transform duration-300 group-hover:scale-110 group-hover:rotate-[5deg]",
-                    navy
-                      ? "bg-white/[0.12] text-[#7BB3FF] shadow-[0_0_20px_rgba(59,130,246,0.20)] ring-1 ring-white/10"
-                      : "bg-gradient-to-br from-blue-50 to-blue-100/80 text-[#1D4ED8] shadow-[0_8px_22px_rgba(37,99,235,0.10)] ring-1 ring-blue-200/50",
-                  ].join(" ")}
-                >
-                  <Icon className="size-6" />
+                  {/* Title + animated expanding underline accent */}
+                  <div className="relative pt-1">
+                    <h3 className="font-heading text-xl font-bold tracking-tight text-slate-900">
+                      {service.title}
+                    </h3>
+                    <div className="relative mt-2.5 h-[3px] w-full overflow-hidden rounded-full bg-slate-100">
+                      <span className="absolute inset-y-0 left-0 w-7 rounded-full bg-blue-600 transition-all duration-300 ease-out group-hover:w-full" />
+                    </div>
+                  </div>
+
+                  {/* Tagline text */}
+                  <p className="text-base leading-relaxed text-slate-600">
+                    {service.tagline}
+                  </p>
                 </div>
 
-                {/* Title + hover-expand underline */}
-                <h3
-                  className={[
-                    "relative mt-7 pb-2 font-heading text-[1.35rem] font-bold leading-[1.15] tracking-[-0.03em]",
-                    navy ? "text-white" : "text-[#0F1F4D]",
-                  ].join(" ")}
-                >
-                  {service.title}
-                  <span
-                    className={[
-                      "absolute bottom-0 left-0 block h-[3px] rounded-full transition-all duration-300 ease-out group-hover:w-12",
-                      navy ? "w-6 bg-[#3B82F6]" : "w-6 bg-[#2563EB]",
-                    ].join(" ")}
-                    aria-hidden="true"
-                  />
-                </h3>
-
-                {/* Tagline — max 2 lines */}
-                <p
-                  className={[
-                    "mt-5 line-clamp-2 text-[0.9375rem] leading-[1.5]",
-                    navy ? "text-white/75" : "text-slate-600",
-                  ].join(" ")}
-                >
-                  {service.tagline}
-                </p>
-
                 {/* View / Collapse link row */}
-                <span
-                  className={[
-                    "mt-auto inline-flex items-center gap-1.5 pt-6 text-[0.8rem] font-semibold transition-colors duration-200",
-                    navy
-                      ? "text-[#7BB3FF] group-hover:text-white"
-                      : "text-[#1d4ed8] group-hover:text-[#2563eb]",
-                  ].join(" ")}
-                >
+                <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-blue-600 transition-colors duration-200 group-hover:text-blue-700">
                   {isActive ? "Collapse ↑" : "View details"}
                   {!isActive && (
                     <ArrowUpRight className="size-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

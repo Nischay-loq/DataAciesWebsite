@@ -58,6 +58,7 @@ type SubService = {
   title: string;
   description: string;
   icon: LucideIcon;
+  imageSrc?: string;
 };
 
 type Service = {
@@ -285,48 +286,56 @@ const services: Service[] = [
       {
         title: "Process Analysis & Optimization",
         icon: Search,
+        imageSrc: "/services_images/DigitalOperations/1.png",
         description:
           "Identify inefficiencies in your workflows and redesign them for maximum productivity and output quality.",
       },
       {
         title: "Workflow Design & RPA",
         icon: Bot,
+        imageSrc: "/services_images/DigitalOperations/2.png",
         description:
           "Automate repetitive tasks and orchestrate complex workflows with RPA and intelligent automation tools.",
       },
       {
         title: "Data Management & Automation",
         icon: Database,
+        imageSrc: "/services_images/DigitalOperations/3.png",
         description:
           "Centralize and automate data flows to reduce manual effort, errors, and eliminate costly data silos.",
       },
       {
         title: "Customer Support & Service Management",
         icon: Headphones,
+        imageSrc: "/services_images/DigitalOperations/4.png",
         description:
           "Deliver consistent, high-quality customer support through structured service-management frameworks.",
       },
       {
         title: "Supply Chain & Logistics Management",
         icon: Truck,
+        imageSrc: "/services_images/DigitalOperations/5.png",
         description:
           "Optimize end-to-end supply chain operations for reduced cost, faster speed, and improved reliability.",
       },
       {
         title: "Financial Planning & Accounting (FP&A)",
         icon: Calculator,
+        imageSrc: "/services_images/DigitalOperations/6.png",
         description:
           "Drive informed business decisions with integrated financial planning, forecasting, and reporting tools.",
       },
       {
         title: "Reporting & Performance Measurement",
         icon: BarChart2,
+        imageSrc: "/services_images/DigitalOperations/7.png",
         description:
           "Monitor KPIs and generate actionable reports to keep leadership aligned and continuously informed.",
       },
       {
         title: "Audit & Compliance Management",
         icon: Clipboard,
+        imageSrc: "/services_images/DigitalOperations/8.png",
         description:
           "Implement audit trails, controls, and compliance programs to reduce risk and meet regulatory requirements.",
       },
@@ -538,10 +547,22 @@ function SubServiceCard({
       ].join(" ")}
     >
       <div className="flex flex-col space-y-4">
-        {/* Refined larger icon badge */}
-        <div className="flex size-14 shrink-0 items-center justify-center rounded-2xl border border-blue-200/60 bg-gradient-to-br from-blue-50 to-blue-100/90 text-blue-600 shadow-sm transition-transform duration-300 ease-out group-hover:scale-[1.08]">
-          <Icon className="size-7 stroke-[2.2]" aria-hidden="true" />
-        </div>
+        {/* Prominent feature image or icon badge */}
+        {sub.imageSrc ? (
+          <div className="relative h-44 sm:h-48 w-full shrink-0 overflow-hidden rounded-2xl border border-blue-100/80 bg-gradient-to-br from-blue-50/40 via-white to-blue-50/60 p-4 shadow-inner transition-all duration-300 ease-out group-hover:border-blue-300">
+            <Image
+              src={sub.imageSrc}
+              alt={sub.title}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="object-contain p-2 transition-transform duration-300 ease-out group-hover:scale-105"
+            />
+          </div>
+        ) : (
+          <div className="flex size-14 shrink-0 items-center justify-center rounded-2xl border border-blue-200/60 bg-gradient-to-br from-blue-50 to-blue-100/90 text-blue-600 shadow-sm transition-transform duration-300 ease-out group-hover:scale-[1.08]">
+            <Icon className="size-7 stroke-[2.2]" aria-hidden="true" />
+          </div>
+        )}
 
         {/* Title + animated full-width expanding underline accent */}
         <div className="relative pt-1">
@@ -799,49 +820,67 @@ export function ServicesSection() {
           </motion.div>
         </div>
 
-        {/* ── Card grid (1 Hero + 5 Service Cards = 6 Cards total in 3-col grid) ── */}
-        <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {/* ── Uniform 3×2 card grid — all 6 cells identical size ── */}
+        <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
 
-          {/* Hero / brand-statement tile */}
+          {/* ── Card 0: Overview / brand-statement tile ── */}
           <motion.article
             initial={{ opacity: 0, y: 22 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-            className="relative flex flex-col justify-between overflow-hidden rounded-[1.7rem] border border-[#2f6bff] bg-[linear-gradient(160deg,#2463eb_0%,#0f1f4d_100%)] p-7 text-white shadow-[0_24px_64px_rgba(37,99,235,0.28)]"
+            transition={{ duration: 0.5, delay: 0 * 0.08, ease: [0.22, 1, 0.36, 1] }}
+            whileHover={{ y: -4, boxShadow: "0 20px 48px rgba(37,99,235,0.32)" }}
+            className="group relative flex min-h-[420px] flex-col justify-between overflow-hidden rounded-2xl border border-[#2f6bff]/40 bg-[linear-gradient(160deg,#2463eb_0%,#0f1f4d_100%)] p-8 text-white shadow-md"
           >
+            {/* Inner glow overlay */}
             <div
-              className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_100%,rgba(125,211,252,0.24),transparent_48%),linear-gradient(180deg,rgba(255,255,255,0.07)_0%,transparent_28%)]"
+              className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_100%,rgba(125,211,252,0.22),transparent_52%),linear-gradient(180deg,rgba(255,255,255,0.06)_0%,transparent_30%)]"
               aria-hidden
             />
-            <div className="relative flex h-full flex-col">
-              <div className="flex size-13 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur-sm">
-                <Code2 className="size-6" />
+
+            <div className="relative flex flex-col space-y-4">
+              {/* Icon badge — same size as service cards */}
+              <div className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-white/15 text-white shadow-sm backdrop-blur-sm transition-transform duration-300 ease-out group-hover:scale-[1.08]">
+                <Code2 className="size-7" />
               </div>
-              <h2 className="mt-8 font-heading text-[1.8rem] font-semibold leading-[1.15] tracking-[-0.04em] sm:text-[2rem]">
-                Turn Data into Decisions. Drive Impact.
-              </h2>
-              <div className="mt-4 h-px w-8 bg-white/75" aria-hidden />
-              <div className="mt-6 space-y-3">
+
+              {/* Title */}
+              <div className="relative pt-1">
+                <h3 className="font-heading text-xl font-bold leading-[1.2] tracking-tight">
+                  Turn Data into Decisions. Drive Impact.
+                </h3>
+                <div className="relative mt-2.5 h-[3px] w-full overflow-hidden rounded-full bg-white/20">
+                  <span className="absolute inset-y-0 left-0 w-7 rounded-full bg-white/80 transition-all duration-300 ease-out group-hover:w-full" />
+                </div>
+              </div>
+
+              {/* Condensed 3 sub-items */}
+              <div className="space-y-2">
                 {supportCards.map((item) => {
                   const Icon = item.icon;
                   return (
-                    <div key={item.title} className="flex items-start gap-3 rounded-2xl bg-white/8 p-3 backdrop-blur-[2px]">
-                      <div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-white text-[#2463eb] shadow-sm">
-                        <Icon className="size-4.5" />
+                    <div key={item.title} className="flex items-center gap-2.5 rounded-xl bg-white/8 px-3 py-2 backdrop-blur-[2px]">
+                      <div className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-white text-[#2463eb] shadow-sm">
+                        <Icon className="size-3.5" />
                       </div>
                       <div>
-                        <p className="text-sm font-semibold">{item.title}</p>
-                        <p className="mt-0.5 text-xs leading-4.5 text-white/85">{item.description}</p>
+                        <p className="text-sm font-semibold leading-tight">{item.title}</p>
+                        <p className="text-xs leading-snug text-white/80">{item.description}</p>
                       </div>
                     </div>
                   );
                 })}
               </div>
             </div>
+
+            {/* View details — bottom-left, same as service cards */}
+            <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-white/80 transition-colors duration-200 group-hover:text-white">
+              View details
+              <ArrowUpRight className="size-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </span>
           </motion.article>
 
-          {/* 5 service cards — unified light card style */}
+          {/* ── Cards 1–5: Service cards ── */}
           {services.map((service, index) => {
             const isActive = activeService?.slug === service.slug;
             const hasDifferentActive = activeService !== null && !isActive;
@@ -852,40 +891,41 @@ export function ServicesSection() {
                 key={service.slug}
                 type="button"
                 onClick={() => handleSelect(service)}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 22 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{
                   duration: 0.5,
-                  delay: index * 0.08,
+                  delay: (index + 1) * 0.08,
                   ease: [0.22, 1, 0.36, 1],
                 }}
                 whileHover={!isActive ? { y: -4 } : {}}
                 aria-label={`${isActive ? "Collapse" : "Expand"} ${service.title}`}
                 aria-expanded={isActive}
                 className={[
-                  "group relative flex flex-col justify-between overflow-hidden rounded-[1.5rem] border p-6 text-left transition-all duration-300 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2463eb]/40 focus-visible:ring-offset-2",
+                  "group relative flex min-h-[420px] flex-col justify-between overflow-hidden rounded-2xl p-8 text-left shadow-md transition-all duration-300 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2463eb]/40 focus-visible:ring-offset-2",
                   hasDifferentActive ? "opacity-60" : "opacity-100",
                   isActive
                     ? "border-2 border-[#2563EB] bg-gradient-to-br from-white via-blue-50/40 to-blue-100/60 shadow-xl shadow-blue-500/15"
-                    : "border-slate-200 bg-gradient-to-br from-white via-blue-50/20 to-blue-50/50 shadow-md hover:border-blue-300 hover:shadow-xl hover:shadow-blue-500/15",
+                    : "border border-slate-200 bg-gradient-to-br from-white via-blue-50/20 to-blue-50/50 hover:border-blue-300 hover:shadow-xl hover:shadow-blue-500/15",
                 ].join(" ")}
               >
+                {/* Top accent bar */}
                 {!isActive && (
                   <motion.div
                     layoutId={`accent-${service.slug}`}
-                    className="absolute inset-x-0 top-0 h-[3px] rounded-t-[1.5rem] bg-gradient-to-r from-[#2563EB] to-[#1D4ED8]"
+                    className="absolute inset-x-0 top-0 h-[3px] rounded-t-2xl bg-gradient-to-r from-[#2563EB] to-[#1D4ED8]"
                     transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] as const }}
                   />
                 )}
 
                 <div className="flex flex-col space-y-4">
-                  {/* Refined larger icon badge */}
+                  {/* Icon badge — identical size to overview card */}
                   <div className="flex size-14 shrink-0 items-center justify-center rounded-2xl border border-blue-200/60 bg-gradient-to-br from-blue-50 to-blue-100/90 text-blue-600 shadow-sm transition-transform duration-300 ease-out group-hover:scale-[1.08]">
                     <Icon className="size-7 stroke-[2.2]" />
                   </div>
 
-                  {/* Title + animated expanding underline accent */}
+                  {/* Title + underline */}
                   <div className="relative pt-1">
                     <h3 className="font-heading text-xl font-bold tracking-tight text-slate-900">
                       {service.title}
@@ -895,13 +935,13 @@ export function ServicesSection() {
                     </div>
                   </div>
 
-                  {/* Tagline text */}
+                  {/* Description */}
                   <p className="text-base leading-relaxed text-slate-600">
                     {service.tagline}
                   </p>
                 </div>
 
-                {/* View / Collapse link row */}
+                {/* View details — bottom-left, matches overview card */}
                 <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-blue-600 transition-colors duration-200 group-hover:text-blue-700">
                   {isActive ? "Collapse ↑" : "View details"}
                   {!isActive && (
